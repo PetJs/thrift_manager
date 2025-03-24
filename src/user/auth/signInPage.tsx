@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import Lock from "../assets/icons/lock.png";
-import SMS from "../assets/icons/sms.png";
+import Lock from "../../assets/icons/lock.svg"
+import SMS from "../../assets/icons/sms.svg";
 import { Link } from "react-router-dom";
 
 export default function SignIn() {
@@ -19,7 +19,7 @@ export default function SignIn() {
           <div className="mb-6">
             <div className="relative">
               <span className="absolute left-3 top-3 w-4 h-4">
-                <img src={SMS} alt="sms.png" />
+                <img src={SMS} alt="sms.svg" />
               </span>
               <input
                 type="email"
@@ -43,7 +43,7 @@ export default function SignIn() {
                 className="block w-full px-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
               />
               <span className="absolute left-3 top-3 w-4 h-4 ">
-                <img src={Lock} alt="lock.png" />
+                <img src={Lock} alt="lock.svg" />
               </span>
             </div>
           </div>

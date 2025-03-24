@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import Lock from "../assets/icons/lock.png";
+import Lock from "../../assets/icons/lock.svg";
 import { Link } from "react-router-dom";
 
 export default function ResetPassword() {
@@ -19,7 +19,7 @@ export default function ResetPassword() {
           <div className="mb-6">
             <div className="relative">
               <span className="absolute left-3 top-3 w-4 h-4 ">
-                <img src={Lock} alt="lock.png" />
+                <img src={Lock} alt="lock.svg" />
               </span>
               <input
                 type="email"
@@ -43,7 +43,7 @@ export default function ResetPassword() {
                 className="block w-full px-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
               />
               <span className="absolute left-3 top-3 w-4 h-4 ">
-                <img src={Lock} alt="lock.png" />
+                <img src={Lock} alt="lock.svg" />
               </span>
             </div>
           </div>

@@ -1,19 +1,19 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
-import SignIn from './user/signInPage'
-import OTPVerification from './user/otpPage';
-import ResetPassword from './user/resetPasswordPage';
+import SignIn from './user/auth/signInPage';
+import OTPVerification from './user/auth/otpPage';
+import ResetPassword from './user/auth/resetPasswordPage';
+import Dashboard from './user/dashboard';
 
 
 function App() {
-
-
   return (
     <>
     <Routes>
-      <Route path="/" element={<SignIn/> } />
+      <Route path="/sign-in" element={<SignIn/> } />
       <Route path="/otp-verification" element={<OTPVerification/>} />
       <Route path="/reset-password" element={<ResetPassword/>} />
+      <Route path="/" element={<Dashboard/>}/>
     </Routes>
     </>
   )
