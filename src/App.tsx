@@ -1,11 +1,20 @@
 import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import SignIn from './user/signInPage'
+import OTPVerification from './user/otpPage';
+import ResetPassword from './user/resetPasswordPage';
+
 
 function App() {
 
 
   return (
     <>
-      <h1 className='text-blue-500'>Thrift Manager</h1>
+    <Routes>
+      <Route path="/" element={<SignIn/> } />
+      <Route path="/otp-verification" element={<OTPVerification/>} />
+      <Route path="/reset-password" element={<ResetPassword/>} />
+    </Routes>
     </>
   )
 }
