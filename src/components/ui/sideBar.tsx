@@ -7,16 +7,16 @@ const SideBar: React.FC<SidebarProps> = ({ items, onLogout }) => {
   const location = useLocation();
 
   return (
-    <div className="h-screen w-60 bg-white">
+    <div className="h-screen w-60 bg-[#FFFFFF] shadow-lg">
       {/* Header Section */}
-        <div className="flex flex-col items-center mb-4 mt-4 border-b-2 border-b-gray-300">
-        <div className="flex items-center mb-2">
-            <div className="w-3 h-3 bg-blue-600 rounded-full mr-1"></div>
-            <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
-            <h1 className="text-lg font-bold text-gray-700 ml-1">
-            Thrift Management App
-            </h1>
-        </div>
+        <div className="flex flex-col items-center justify-center border-b-2 border-b-[#D5D5D5] h-[60px]">
+            <div className="flex items-center ">
+                <div className="w-[12px] h-[12px] bg-blue-600 rounded-full "></div>
+                <div className="w-[12px] h-[12px] bg-blue-600 rounded-full"></div>
+                <h1 className="text-[14px] font-bold text-gray-700 ml-1">
+                Thrift Management App
+                </h1>
+            </div>
         </div>
 
         {/* Menu Items */}

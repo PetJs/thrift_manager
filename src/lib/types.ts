@@ -9,4 +9,7 @@ export interface SidebarProps {
     items: SidebarItem[];
     onLogout: () => void;
 };
-  
+
+export interface NavBarProps{
+    img: string;
+}

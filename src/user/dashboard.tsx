@@ -2,6 +2,7 @@ import SideBar from "@/components/ui/sideBar"
 import DashboardIcon from "../assets/icons/category.svg"
 import ContributionIcon from "../assets/icons/money-add.svg";
 import RefreshIcon from "../assets/icons/refresh-2.svg";
+import NavBar from "@/components/ui/navBar";
 
 const items = [
   { icon: DashboardIcon, label: "Dashboard", path: "/" },
@@ -22,9 +23,7 @@ export default function Dashboard(){
         <div className="flex">
             <SideBar items={items} onLogout={handleLogout}/>
             <div className="flex-1">
-                <nav className="flex flex-col items-end px-4">
-                    <h3 className="text-lg font-bold">Profile</h3>
-                </nav>
+                <NavBar/>
             </div>
         </div>
     )
