@@ -7,7 +7,7 @@ const SideBar: React.FC<SidebarProps> = ({ items, onLogout }) => {
   const location = useLocation();
 
   return (
-    <div className="fixed h-screen w-60 bg-[#FFFFFF] shadow-lg ">
+    <div className="fixed h-screen w-60 bg-[#FFFFFF] shadow-lg z-30">
       {/* Header Section */}
         <div className="flex flex-col items-center justify-center border-b-2 border-b-[#D5D5D5] h-[60px]">
             <div className="flex items-center ">
