@@ -6,7 +6,10 @@ import SignIn from "@/user/auth/signInPage";
 import ContributionPage from "@/user/contributionPage";
 import Dashboard from "@/user/dashboard";
 import SchedulePage from "@/user/schedulePage";
+import ProfilePage from "@/user/settings/profilePage";
 import { generateRoutes } from "./generate-routes";
+import SettingLayout from "@/layouts/settings-layout";
+
 
 const routes = [
     {
@@ -55,13 +58,22 @@ const routes = [
                 path: '/schedule'
             },
             {
-                name: 'Settings',
-                title: 'Settings',
-                // element: Settin,
-                path: '/settings'
-            }
+                name: "Settings",
+                title: "Settings",
+                element: SettingLayout,
+                path: "/settings",
+                routes: [
+                  {
+                    name: "Profile",
+                    title: "Profile",
+                    element: ProfilePage,
+                    path: "profile",
+                  },
+                ],
+              },
         ]
-    }
+    },
+    
 ]
 
 export const Routes = generateRoutes(routes);

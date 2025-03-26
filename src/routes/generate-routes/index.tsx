@@ -8,30 +8,48 @@ type RouteConfig = {
   path: string;
   element?: React.ComponentType<any>;
   title?: string;
-  routes?: RouteConfig[];
-}
+  routes?: RouteConfig[]; // Nested routes
+};
 
 type LayoutConfig = {
   layout: React.ComponentType<any>;
   routes: RouteConfig[];
-}
+};
 
-const flattenRoutes = (routes: RouteConfig[]): RouteConfig[] => {
-    const result: RouteConfig[] = [];
-    const stack = [...routes];
-  
-    while (stack.length) {
-      const route = stack.pop();
-      if (!route) continue;
-      
-      const { routes: subRoutes, ...rest } = route;
-      result.push(rest);
-      
-      if (subRoutes) stack.push(...subRoutes);
+const renderRoutes = (
+  routes: RouteConfig[],
+  parentLayout?: React.ComponentType<any>,
+  isAuthorized = true
+) => {
+  return routes.map(({ element: Element, path, routes: nestedRoutes, name }, index) => {
+    if (!Element || !path) return null;
+
+    // If there are nested routes, render them recursively
+    if (nestedRoutes && nestedRoutes.length > 0) {
+      return (
+        <Route key={`${path}-${index}`} path={path} element={<Element />}>
+          {renderRoutes(nestedRoutes, undefined, isAuthorized)}
+        </Route>
+      );
     }
-  
-    return result;
-  };
+
+    return (
+      <Route
+        key={name || `route-${index}`}
+        path={path}
+        element={
+          parentLayout === DashboardLayout ? (
+            <ProtectedRoute isAuthorized={isAuthorized}>
+              <Element />
+            </ProtectedRoute>
+          ) : (
+            <Element />
+          )
+        }
+      />
+    );
+  });
+};
 
 export const generateRoutes = (mainRoutes: LayoutConfig[]) => {
   const Routes = () => {
@@ -39,34 +57,14 @@ export const generateRoutes = (mainRoutes: LayoutConfig[]) => {
 
     return (
       <ReactRoutes>
-        {mainRoutes.map(({ layout: Layout, routes }, index) => {
-          const flatRoutes = flattenRoutes(routes);
-
-          return (
-            <Route key={`layout-${index}`} element={<Layout />}>
-              {flatRoutes.map(({ element: Element, path, name }) =>
-                Element && path ? (
-                  <Route
-                    key={name || `route-${path}`}
-                    element={
-                      Layout === DashboardLayout ? (
-                        <ProtectedRoute isAuthorized={isAuthorized}>
-                          <Element />
-                        </ProtectedRoute>
-                      ) : (
-                        <Element />
-                      )
-                    }
-                    path={path}
-                  />
-                ) : null
-              )}
-            </Route>
-          );
-        })}
+        {mainRoutes.map(({ layout: Layout, routes }, index) => (
+          <Route key={`layout-${index}`} element={<Layout />}>
+            {renderRoutes(routes, Layout, isAuthorized)}
+          </Route>
+        ))}
         <Route
           path="/"
-          element={<Navigate to={isAuthorized ? "/home" : "/login"} />}
+          element={<Navigate to={isAuthorized ? "/home" : "/signin"} />}
         />
       </ReactRoutes>
     );
