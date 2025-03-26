@@ -61,7 +61,7 @@ export type User = {
   phone: string;
   address: string;
   date_created: Date;
-  role: UserRole;
+  role?: UserRole;
 };
 
 export type AuthCredentials = {

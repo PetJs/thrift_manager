@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,6 +17,8 @@ import useUserStore from "@/store/user-store";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useMemo } from "react";
+import { AxiosError } from "axios";
+import { ApiResponse } from "@/lib/types";
 
 const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -38,8 +38,12 @@ export default function SignIn() {
       toast.success("Woo hoo signed in");
       navigate("/");
     },
-    onError: () => {
-      toast.error("Sign in Error");
+    onError: (err) => {
+      console.log(err);
+      const errorMessage =
+        ((err as AxiosError).response?.data as ApiResponse<null>)?.message ||
+        "Sign in Error";
+      toast.error(errorMessage);
     },
   });
 
@@ -60,7 +64,7 @@ export default function SignIn() {
     <div className="w-full max-w-[400px] bg-white rounded-2xl shadow-md p-6">
       <Button
         onClick={toggleRole}
-        className="w-full mt-3 bg-gray-600 text-white py-2 mb-3"
+        className="w-full mt-3 bg-gray-600 text-white py-2 mb-1"
       >
         {isAdmin ? "Sign in as User" : "Sign in as Admin"}
       </Button>

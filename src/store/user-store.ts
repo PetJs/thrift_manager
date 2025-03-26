@@ -36,7 +36,7 @@ const useUserStore = create<UserStore>(
       setUser: ({ user }) =>
         set({
           user,
-          currentRole: user.role as UserRole,
+          currentRole: user?.role as UserRole,
           authorized: true,
         }),
       updateUser: (user) => set({ user }),

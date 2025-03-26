@@ -1,5 +1,6 @@
 import { axs } from "@/lib/axios";
 import { ApiResponse, AuthCredentials, AuthUser, User } from "@/lib/types";
+import { AxiosError } from "axios";
 
 export class AuthService {
   static async registerUser(
@@ -16,11 +17,11 @@ export class AuthService {
 
   static async loginUser(req: AuthCredentials): Promise<ApiResponse<AuthUser>> {
     try {
-      const response = await axs.post("/users/login", req);
+      const response = await axs.post("/users/login/", req);
       return response.data;
     } catch (error) {
       console.error("Error logging in:", error);
-      throw error;
+      throw error as AxiosError;
     }
   }
 
@@ -28,11 +29,11 @@ export class AuthService {
     req: AuthCredentials
   ): Promise<ApiResponse<AuthUser>> {
     try {
-      const response = await axs.post("/admin/login", req);
+      const response = await axs.post("/admin/login/", req);
       return response.data;
     } catch (error) {
       console.error("Error logging in:", error);
-      throw error;
+      throw error as AxiosError;
     }
   }
 }
