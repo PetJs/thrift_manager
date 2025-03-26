@@ -10,6 +10,10 @@ import ProfilePage from "@/user/settings/profilePage";
 import { generateRoutes } from "./generate-routes";
 import SettingLayout from "@/layouts/settings-layout";
 import PaymentDetailsPage from "@/user/settings/paymentPage";
+import Reminders from "@/user/settings/notificationPage";
+import SecuritySetting from "@/user/settings/securitySettingsPage";
+import ChangePassowordPage from "@/user/settings/changePassword";
+
 
 
 const routes = [
@@ -71,12 +75,29 @@ const routes = [
                     path: "profile",
                   },
                   {
-                    name: "Profile",
-                    title: "Profile",
+                    name: "Payment",
+                    title: "Payment",
                     element: PaymentDetailsPage,
                     path: "payment-details",
                   },
-                  
+                  {
+                    name: "Notification",
+                    title: "Notification",
+                    element: Reminders,
+                    path: "notification",
+                  },
+                  {
+                    name: "Security",
+                    title: "Security",
+                    element: SecuritySetting,
+                    path: "security",
+                  },
+                  {
+                    name: "Change Password",
+                    title: "Change Password",
+                    element: ChangePassowordPage,
+                    path: "change-password",
+                  },
                 ],
               },
         ]
