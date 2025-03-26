@@ -2,17 +2,19 @@ import { Button } from "@/components/ui/button";
 import Lock from "../../assets/icons/lock.svg"
 import SMS from "../../assets/icons/sms.svg";
 import { Link } from "react-router-dom";
+import useUserStore from "@/store/user-store";
 
 export default function SignIn() {
+  const { currentRole } = useUserStore();
 
     return (
-      <div className="bg-[#2341AA] h-screen flex flex-col items-center justify-center">
+      <>
         <form className="bg-white rounded-2xl shadow-md w-[400px] p-6">
           <div className="flex flex-col items-center mb-6 mt-6">
             <div className="flex items-center mb-2">
               <div className="w-4 h-4 bg-blue-600 rounded-full mr-1"></div>
               <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
-              <h1 className="text-xl font-bold text-gray-700 ml-3" >Thrift Management App</h1>
+              <h1 className="text-xl font-bold text-gray-700 ml-3" >Thrift Management {currentRole === 'admin' ? 'Admin' : 'User'}</h1>
             </div>
           </div>
   
@@ -59,7 +61,7 @@ export default function SignIn() {
         <div className="text-center mt-4 text-sm text-white">
             Forgot your password? <Link to="/reset-password" className="text-white hover:underline cursor-pointer"> Reset Password </Link>
         </div>
-      </div>
+      </>
     );
   }
   
