@@ -33,7 +33,7 @@ const OTPVerification = () => {
   };
 
   return (
-    <div className="bg-[#2341AA] h-screen flex flex-col justify-center items-center">
+    <>
       <div className="bg-white w-96 p-6 rounded-lg shadow-lg text-center">
         <h2 className="text-2xl font-semibold mb-2">OTP Verification</h2>
         <p className="text-gray-600 mb-6">
@@ -62,7 +62,9 @@ const OTPVerification = () => {
           }`}
           disabled={!isFilled}
         >
-          Sign in
+          <Link to='/confirm-password'>
+            Reset Password
+          </Link>
         </Button>
 
         <p className="text-gray-500 mt-4">
@@ -73,7 +75,7 @@ const OTPVerification = () => {
       <div className="text-center mt-4 text-sm text-white">
             Forgot your password? <Link to="/reset-password" className="text-white hover:underline cursor-pointer"> Reset Password </Link>
         </div>
-    </div>
+    </>
   );
 };
 

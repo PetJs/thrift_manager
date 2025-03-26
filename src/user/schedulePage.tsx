@@ -40,10 +40,10 @@ const payoutData = [
   const SchedulePage = () => {
     return (
         <div>
-            <CustomTable columns={payoutColumns} data={payoutData} />;
+            <CustomTable columns={payoutColumns} data={payoutData} />
         </div>     
     )
-  };
+  }
   
   export default SchedulePage;
   

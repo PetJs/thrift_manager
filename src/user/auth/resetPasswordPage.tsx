@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function ResetPassword() {
 
     return (
-      <div className="bg-[#2341AA] h-screen flex flex-col items-center justify-center">
+      <>
         <form className="bg-white rounded-2xl shadow-md w-[400px] p-6">
           <div className="flex flex-col items-center mb-6 mt-6">
             <div className="flex flex-col items-center mb-2">
@@ -47,7 +47,7 @@ export default function ResetPassword() {
               </span>
             </div>
           </div>
-          <Link to="/otp-verification">
+          <Link to="/signin">
             <Button
                 type="submit"
                 className="w-full bg-[#2341AA] text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 cursor-pointer mb-4"
@@ -56,7 +56,7 @@ export default function ResetPassword() {
             </Button>
           </Link>
         </form>
-      </div>
+      </>
     );
   }
   
