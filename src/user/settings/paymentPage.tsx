@@ -33,6 +33,7 @@ const PaymentDetailsPage = ()=>{
                 Add New Credit / Debit Card
                 </label>
                 <div className="flex items-center justify-between p-2 bg-gray-100 rounded-lg shadow-sm cursor-pointer">
+                    <img src={Card} alt="" />
                     <select
                         className="appearance-none bg-transparent text-gray-700 font-medium cursor-pointe"
                     >
