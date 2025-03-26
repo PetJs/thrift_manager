@@ -2,6 +2,7 @@
 import { Route, Routes as ReactRoutes, Navigate } from "react-router-dom";
 import ProtectedRoute from "../protected-routes";
 import DashboardLayout from "@/layouts/dashboard-layout";
+import useUserStore from "@/store/user-store";
 
 type RouteConfig = {
   name?: string;
@@ -21,39 +22,41 @@ const renderRoutes = (
   parentLayout?: React.ComponentType<any>,
   isAuthorized = true
 ) => {
-  return routes.map(({ element: Element, path, routes: nestedRoutes, name }, index) => {
-    if (!Element || !path) return null;
+  return routes.map(
+    ({ element: Element, path, routes: nestedRoutes, name }, index) => {
+      if (!Element || !path) return null;
 
-    // If there are nested routes, render them recursively
-    if (nestedRoutes && nestedRoutes.length > 0) {
+      // If there are nested routes, render them recursively
+      if (nestedRoutes && nestedRoutes.length > 0) {
+        return (
+          <Route key={`${path}-${index}`} path={path} element={<Element />}>
+            {renderRoutes(nestedRoutes, undefined, isAuthorized)}
+          </Route>
+        );
+      }
+
       return (
-        <Route key={`${path}-${index}`} path={path} element={<Element />}>
-          {renderRoutes(nestedRoutes, undefined, isAuthorized)}
-        </Route>
+        <Route
+          key={name || `route-${index}`}
+          path={path}
+          element={
+            parentLayout === DashboardLayout ? (
+              <ProtectedRoute isAuthorized={isAuthorized}>
+                <Element />
+              </ProtectedRoute>
+            ) : (
+              <Element />
+            )
+          }
+        />
       );
     }
-
-    return (
-      <Route
-        key={name || `route-${index}`}
-        path={path}
-        element={
-          parentLayout === DashboardLayout ? (
-            <ProtectedRoute isAuthorized={isAuthorized}>
-              <Element />
-            </ProtectedRoute>
-          ) : (
-            <Element />
-          )
-        }
-      />
-    );
-  });
+  );
 };
 
 export const generateRoutes = (mainRoutes: LayoutConfig[]) => {
   const Routes = () => {
-    const isAuthorized = true;
+    const { authorized: isAuthorized } = useUserStore();
 
     return (
       <ReactRoutes>
