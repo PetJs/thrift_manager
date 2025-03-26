@@ -27,7 +27,7 @@ export default function DashboardLayout() {
             <div className="flex-1 h-screen relative">
                 <SideBar items={items} onLogout={handleLogout}/>
                 <NavBar />
-                <div className="mt-8 w-full md:max-w-[80%] md:absolute md:right-0 md:left-auto">
+                <div className="mt-8 mr-4 w-full md:max-w-[80%] md:absolute md:right-0 md:left-auto">
                     <Outlet />
                 </div>
             </div>

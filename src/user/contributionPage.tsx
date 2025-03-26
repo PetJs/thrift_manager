@@ -45,8 +45,8 @@ const ContributionPage = () => {
               <p className="text-[18px]">Status for this month: Pending</p>
             </div>
             <div className="flex items-center text-center gap-3" >
-                <h2 className="text-[22px] font-medium mb-4">Contribution History</h2>
-                <hr className="w-[859px] border-gray-500 border-1" />
+                <h2 className="text-[22px]  mb-4">Contribution History</h2>
+                <hr className="w-[859px] border-gray-300 border-1" />
             </div>
             <CustomTable columns={columns} data={paymentData} />  
           </>

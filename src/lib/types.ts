@@ -41,3 +41,12 @@ export interface TableProps {
 }
 
 export type Status = "Paid" | "Pending" | "Upcoming";
+
+export interface SettingNavItem {
+    label: string; 
+    path: string;
+};
+
+export interface SettingNavProps {
+    items: SettingNavItem[];
+};

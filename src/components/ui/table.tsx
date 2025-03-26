@@ -6,9 +6,9 @@ const CustomTable: React.FC<TableProps> = ({ columns, data }) => {
     <div className="px-4 w-[1088px] bg-white border rounded-lg shadow-md overflow-auto">
       <table className="w-full text-center ">
         <thead>
-          <tr className="border-b">
+          <tr className="border-b text-[17px]">
             {columns.map((column, index) => (
-              <th key={index} className="py-6 px-4 text-gray-600">
+              <th key={index} className="py-6 px-4 text-[17px]">
                 {column.header}
               </th>
             ))}

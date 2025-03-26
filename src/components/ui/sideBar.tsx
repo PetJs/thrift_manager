@@ -27,7 +27,7 @@ const SideBar: React.FC<SidebarProps> = ({ items, onLogout }) => {
                 key={index}
                 className={`flex gap-6 items-center px-6 py-3 cursor-pointer ${
                     location.pathname === item.path
-                    ? "border-l-3 border-blue-700 text-blue-700 font-semibold"
+                    ? "border-l-3 border-blue-700 text-blue-700 "
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
                 >
