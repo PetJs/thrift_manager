@@ -23,10 +23,11 @@ export default function DashboardLayout() {
 
     return (
         <main className="flex relative">
-            <SideBar items={items} onLogout={handleLogout}/>
+         
             <div className="flex-1 h-screen relative">
+                <SideBar items={items} onLogout={handleLogout}/>
                 <NavBar />
-                <div className="mx-auto mt-8 md:absolute md:right-0 md:w-10/12">
+                <div className="mt-8 w-full md:max-w-[80%] md:absolute md:right-0 md:left-auto">
                     <Outlet />
                 </div>
             </div>
