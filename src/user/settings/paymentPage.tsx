@@ -33,17 +33,19 @@ const PaymentDetailsPage = ()=>{
                 Add New Credit / Debit Card
                 </label>
                 <div className="flex items-center justify-between p-2 bg-gray-100 rounded-lg shadow-sm cursor-pointer">
-                    <img src={Card} alt="" />
-                    <select
-                        className="appearance-none bg-transparent text-gray-700 font-medium cursor-pointe"
-                    >
-                        <option value="" disabled selected hidden>
-                        Add New Card
-                        </option>
-                        <option value="visa">Visa</option>
-                        <option value="mastercard">MasterCard</option>
-                        <option value="amex">American Express</option>
-                    </select>
+                    <div className="flex gap-3">
+                        <img src={Card} alt="" />
+                        <select
+                            className="appearance-none bg-transparent text-gray-700 font-medium cursor-pointe"
+                        >
+                            <option value="" disabled selected hidden>
+                            Add New Card
+                            </option>
+                            <option value="visa">Visa</option>
+                            <option value="mastercard">MasterCard</option>
+                            <option value="amex">American Express</option>
+                        </select>
+                    </div>
                     <img src={Vector} alt="" />
                 </div>
             </div>
