@@ -40,6 +40,15 @@ const payoutData = [
   const SchedulePage = () => {
     return (
         <div>
+            <div className="mb-6 flex flex-col gap-2">
+              <h2 className="text-[22px] font-semibold mb-4">Rotation Schedule | Group 5 </h2>
+              <p className="text-[18px]">Next Payout | John Doe will receive contributions on April 20th</p>
+              <p className="text-[18px]">Your Turn | You are scheduled to receive funds on March 31st </p>
+            </div>
+            <div className="flex items-center text-center gap-3" >
+                <h2 className="text-[22px] mb-4">Rotation Schedule List</h2>
+                <hr className="w-[859px] border-gray-300 border-1" />
+            </div>
             <CustomTable columns={payoutColumns} data={payoutData} />
         </div>     
     )
