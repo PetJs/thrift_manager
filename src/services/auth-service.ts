@@ -4,7 +4,7 @@ import { AxiosError } from "axios";
 
 export class AuthService {
   static async registerUser(
-    user: Omit<User, "id" | "last_login" | "date_created">
+    user: Omit<User, "id" | "last_login" | "date_created" | "address">
   ): Promise<ApiResponse<AuthUser>> {
     try {
       const response = await axs.post("/users/", user);
