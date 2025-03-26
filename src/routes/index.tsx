@@ -9,6 +9,7 @@ import SchedulePage from "@/user/schedulePage";
 import ProfilePage from "@/user/settings/profilePage";
 import { generateRoutes } from "./generate-routes";
 import SettingLayout from "@/layouts/settings-layout";
+import PaymentDetailsPage from "@/user/settings/paymentPage";
 
 
 const routes = [
@@ -69,6 +70,13 @@ const routes = [
                     element: ProfilePage,
                     path: "profile",
                   },
+                  {
+                    name: "Profile",
+                    title: "Profile",
+                    element: PaymentDetailsPage,
+                    path: "payment-details",
+                  },
+                  
                 ],
               },
         ]

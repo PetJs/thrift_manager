@@ -6,14 +6,14 @@ export default function SettingLayout() {
 
     const settingItems = [
         { label: "My Profile", path: "/settings/profile" },
-        { label: "Contributions", path: "/contributions" },
+        { label: "Payment and Bank Details", path: "/settings/payment-details" },
         { label: "Rotation Schedule", path: "/schedule" },
         { label: "Settings", path: "/pro" },
     ]
       
     return (
         <main className="flex relative">
-            <div className="flex-1 h-screen relative">
+            <div className="flex-1  relative">
                     <div>
                         <h2>Settings</h2>
                         <SettingNav items={settingItems}/>

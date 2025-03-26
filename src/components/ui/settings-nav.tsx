@@ -6,7 +6,7 @@ const SettingNav: React.FC<SettingNavProps> = ({ items }) => {
 
   return (
     <nav className="flex mt-6">
-        <ul className="flex gap-6 px-4 py-3 ">
+        <ul className="flex gap-6 px-4 py-3 text-[18px] ">
         {items.map(({ label, path }) => (
         <li key={path}>
             <NavLink
