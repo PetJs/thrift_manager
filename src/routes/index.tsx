@@ -16,19 +16,19 @@ const routes = [
                 name: 'Sign In',
                 title: 'Sign In',
                 element: SignIn,
-                path: '/sign-in' 
+                path: '/signin' 
             },
             {
                 name: 'OTP Verification',
                 title: 'OTP Verification',
                 element: OTPVerification,
-                path: '/verification' 
+                path: '/reset-password' 
             },
             {
                 name: 'Reset Password',
                 title: 'Reset Password',
                 element: ResetPassword,
-                path: '/reset-password' 
+                path: '/confirm-password' 
             },
 
         ]
@@ -53,6 +53,12 @@ const routes = [
                 title: 'Schedules',
                 element: SchedulePage,
                 path: '/schedule'
+            },
+            {
+                name: 'Settings',
+                title: 'Settings',
+                // element: Settin,
+                path: '/settings'
             }
         ]
     }

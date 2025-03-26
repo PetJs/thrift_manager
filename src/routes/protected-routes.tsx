@@ -9,7 +9,7 @@ const ProtectedRoute = ({ isAuthorized, children }: Props) => {
   if (!isAuthorized) {
     return (
       <Navigate
-        to={`/login`}
+        to={`/signin`}
         replace
       />
     );
