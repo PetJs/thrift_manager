@@ -1,18 +1,18 @@
 import AuthLayout from "@/layouts/auth-layout";
 import DashboardLayout from "@/layouts/dashboard-layout";
-import OTPVerification from "@/user/auth/otpPage";
-import ResetPassword from "@/user/auth/resetPasswordPage";
-import SignIn from "@/user/auth/signInPage";
-import ContributionPage from "@/user/contributionPage";
-import Dashboard from "@/user/dashboard";
-import SchedulePage from "@/user/schedulePage";
-import ProfilePage from "@/user/settings/profilePage";
+import OTPVerification from "@/pages/auth/otpPage";
+import ResetPassword from "@/pages/auth/resetPasswordPage";
+import SignIn from "@/pages/auth/signInPage";
+import ContributionPage from "@/pages/user/contributionPage";
+import Dashboard from "@/pages/user/dashboard";
+import SchedulePage from "@/pages/user/schedulePage";
+import ProfilePage from "@/pages/user/settings/profilePage";
 import { generateRoutes } from "./generate-routes";
 import SettingLayout from "@/layouts/settings-layout";
-import PaymentDetailsPage from "@/user/settings/paymentPage";
-import Reminders from "@/user/settings/notificationPage";
-import SecuritySetting from "@/user/settings/securitySettingsPage";
-import ChangePassowordPage from "@/user/settings/changePassword";
+import PaymentDetailsPage from "@/pages/user/settings/paymentPage";
+import Reminders from "@/pages/user/settings/notificationPage";
+import SecuritySetting from "@/pages/user/settings/securitySettingsPage";
+import ChangePassowordPage from "@/pages/user/settings/changePassword";
 
 
 
