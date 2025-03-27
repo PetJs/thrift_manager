@@ -16,64 +16,75 @@ import { AuthService } from "@/services/auth-service";
 import useUserStore from "@/store/user-store";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useMemo } from "react";
 import { AxiosError } from "axios";
 import { ApiResponse } from "@/lib/types";
 
-const signInSchema = z.object({
+const signUnSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  name: z.string(),
+  phone: z
+    .string()
+    .min(9, "Phone must be 9 characters")
+    .max(13, "Phone cant be more than 13"),
 });
 
-export default function SignIn() {
+export default function SignUp() {
   const navigate = useNavigate();
-  const { setUser, currentRole, setCurrentRole } = useUserStore();
-  const isAdmin = useMemo(() => currentRole === "admin", [currentRole]);
+  const { setUser } = useUserStore();
 
-  const loginMutation = useMutation({
-    mutationFn:
-      currentRole === "admin" ? AuthService.loginAdmin : AuthService.loginUser,
+  const registerMutation = useMutation({
+    mutationFn: AuthService.registerUser,
     onSuccess: (resp) => {
       setUser({ user: resp.data.data });
-      toast.success("Woo hoo signed in");
+      toast.success("Woo hoo signed up");
       navigate("/");
     },
     onError: (err) => {
       console.log(err);
       const errorMessage =
         ((err as AxiosError).response?.data as ApiResponse<null>)?.message ||
-        "Sign in Error";
+        "Sign Up Error";
       toast.error(errorMessage);
     },
   });
 
   const form = useForm({
-    resolver: zodResolver(signInSchema),
-    defaultValues: { email: "", password: "" },
+    resolver: zodResolver(signUnSchema),
+    defaultValues: { email: "", password: "", name: "", phone: "" },
   });
 
-  const onSubmit = async (values: { email: string; password: string }) => {
-    loginMutation.mutate(values);
-  };
-
-  const toggleRole = () => {
-    setCurrentRole(currentRole === "admin" ? "user" : "admin");
+  const onSubmit = async (values: {
+    email: string;
+    password: string;
+    name: string;
+    phone: string;
+  }) => {
+    registerMutation.mutate(values);
   };
 
   return (
     <div className="w-full max-w-[400px] bg-white rounded-2xl shadow-md p-6">
-      <Button
-        onClick={toggleRole}
-        className="w-full mt-3 bg-gray-600 text-white py-2 mb-1"
-      >
-        {isAdmin ? "Sign in as User" : "Sign in as Admin"}
-      </Button>
       <h1 className="text-xl font-bold text-gray-700 text-center mb-6">
-        Thrift Management {currentRole === "admin" ? "Admin" : "User"}
+        Thrift Management Signup
       </h1>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full name</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="Enter your name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="email"
@@ -84,6 +95,24 @@ export default function SignIn() {
                   <Input
                     type="email"
                     placeholder="Enter your email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Enter your Phone..."
                     {...field}
                   />
                 </FormControl>
@@ -113,23 +142,17 @@ export default function SignIn() {
           <Button
             type="submit"
             className="w-full bg-[#2341AA] text-white py-2"
-            disabled={loginMutation.isPending}
+            disabled={registerMutation.isPending}
           >
-            {loginMutation.isPending ? "Signing in..." : "Sign in"}
+            {registerMutation.isPending ? "Signing up..." : "Sign Up"}
           </Button>
         </form>
       </Form>
 
       <div className="text-center mt-4 text-sm text-gray-600">
-        <p>
-          Dont have an account?{" "}
-          <Link to="/signup" className="text-blue-600 hover:underline">
-            Sign up
-          </Link>{" "}
-        </p>
-        Forgot your password?{" "}
-        <Link to="/reset-password" className="text-blue-600 hover:underline">
-          Reset Password
+        Already have an account?{" "}
+        <Link to="/signin" className="text-blue-500 underline">
+          Sign in
         </Link>
       </div>
     </div>

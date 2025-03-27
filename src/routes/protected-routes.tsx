@@ -7,12 +7,7 @@ type Props = {
 
 const ProtectedRoute = ({ isAuthorized, children }: Props) => {
   if (!isAuthorized) {
-    return (
-      <Navigate
-        to={`/signin`}
-        replace
-      />
-    );
+    return <Navigate to={`/signin`} replace />;
   }
 
   return <>{children}</>;

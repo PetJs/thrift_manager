@@ -1,5 +1,5 @@
 import type { UserRole } from "@/types";
-import type { User } from "@/types";
+import type { User } from "@/lib/types";
 import type { StateCreator } from "zustand";
 import { create } from "zustand";
 import type { PersistOptions } from "zustand/middleware";
@@ -10,6 +10,7 @@ export interface UserStore {
   currentRole: UserRole | null;
   accessToken: string | null;
   refreshToken: string | null;
+  authorized: boolean;
   setUser: (data: { user: User }) => void;
   updateUser: (user: User) => void;
   setTokens: (accessToken: string, refreshToken: string) => void;
@@ -31,10 +32,12 @@ const useUserStore = create<UserStore>(
       accessToken: null,
       refreshToken: null,
       loading: false,
+      authorized: false,
       setUser: ({ user }) =>
         set({
           user,
-          currentRole: user.role as UserRole,
+          currentRole: user?.role as UserRole,
+          authorized: true,
         }),
       updateUser: (user) => set({ user }),
       setTokens: (accessToken, refreshToken) =>
@@ -46,6 +49,7 @@ const useUserStore = create<UserStore>(
           currentRole: null,
           accessToken: null,
           refreshToken: null,
+          authorized: false,
         }),
     }),
     { name: "userStore" }
