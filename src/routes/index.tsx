@@ -14,6 +14,10 @@ import Reminders from "@/pages/user/settings/notificationPage";
 import SecuritySetting from "@/pages/user/settings/securitySettingsPage";
 import ChangePassowordPage from "@/pages/user/settings/changePassword";
 import SignUp from "@/pages/auth/signUpPage";
+import AdminDashboard from "@/pages/admin/dashboard";
+import GroupsPage from "@/pages/admin/groups";
+import AdminSchedule from "@/pages/admin/schedule";
+import AdminSettings from "@/pages/admin/settings";
 
 const routes = [
   {
@@ -49,61 +53,101 @@ const routes = [
     layout: DashboardLayout,
     routes: [
       {
-        name: "Dashboard",
-        title: "User Dashboard",
-        element: Dashboard,
-        path: "/",
-      },
-      {
-        name: "Contributions",
-        title: "Contributions",
-        element: ContributionPage,
-        path: "/contributions",
-      },
-      {
-        name: "Schedules",
-        title: "Schedules",
-        element: SchedulePage,
-        path: "/schedule",
-      },
-      {
-        name: "Settings",
-        title: "Settings",
-        element: SettingLayout,
-        path: "/settings",
+        name: 'Users',
+        path: '/users', 
         routes: [
           {
-            name: "Profile",
-            title: "Profile",
-            element: ProfilePage,
-            path: "profile",
+            name: "Dashboard",
+            title: "User Dashboard",
+            element: Dashboard,
+            path: "",
           },
           {
-            name: "Payment",
-            title: "Payment",
-            element: PaymentDetailsPage,
-            path: "payment-details",
+            name: "Contributions",
+            title: "Contributions",
+            element: ContributionPage,
+            path: "/contributions",
           },
           {
-            name: "Notification",
-            title: "Notification",
-            element: Reminders,
-            path: "notification",
+            name: "Schedules",
+            title: "Schedules",
+            element: SchedulePage,
+            path: "/schedule",
           },
           {
-            name: "Security",
-            title: "Security",
-            element: SecuritySetting,
-            path: "security",
+            name: "Settings",
+            title: "Settings",
+            element: SettingLayout,
+            path: "/settings",
+            routes: [
+              {
+                name: "Profile",
+                title: "Profile",
+                element: ProfilePage,
+                path: "profile",
+              },
+              {
+                name: "Payment",
+                title: "Payment",
+                element: PaymentDetailsPage,
+                path: "payment-details",
+              },
+              {
+                name: "Notification",
+                title: "Notification",
+                element: Reminders,
+                path: "notification",
+              },
+              {
+                name: "Security",
+                title: "Security",
+                element: SecuritySetting,
+                path: "security",
+              },
+              {
+                name: "Change Password",
+                title: "Change Password",
+                element: ChangePassowordPage,
+                path: "change-password",
+              },
+            ],
+          },
+        ]
+      }, 
+      {
+        name: 'Admin',
+        path: '/admin',
+        routes: [
+          {
+            name: 'Admin Dashboard',
+            title: 'Dashboard',
+            element: AdminDashboard,
+            path: ''
           },
           {
-            name: "Change Password",
-            title: "Change Password",
-            element: ChangePassowordPage,
-            path: "change-password",
+            name: 'Groups',
+            title: 'Groups',
+            element: GroupsPage,
+            path: 'groups'
           },
-        ],
-      },
+          {
+            name: 'Admin Schedule',
+            title: 'Admin Schedule',
+            element: AdminSchedule,
+            path: 'schedule'
+          },
+          {
+            name: 'Settings',
+            title: 'Settings',
+            element: AdminSettings,
+            path: 'settings',
+            routes: [
+              // set up sub-routes inside here
+            ]
+          },
+        ]
+      }
+      
     ],
   },
 ];
