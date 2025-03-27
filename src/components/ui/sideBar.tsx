@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { SidebarProps } from "@/lib/types";
-import LogoutIcon from "../../assets/icons/logout.svg"
+import LogoutIcon from "@/assets/icons/logout.svg"
 
 const SideBar: React.FC<SidebarProps> = ({ items, onLogout }) => {
   const location = useLocation();

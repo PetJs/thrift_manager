@@ -1,7 +1,7 @@
 import Card from "@/components/ui/card";
-import DollarIcon from "../assets/icons/dollar-square.svg"
-import People from "../assets/icons/people.svg"
-import NotifsBing from "../assets/icons/notification-bing.svg"
+import DollarIcon from "@/assets/icons/dollar-square.svg"
+import People from "@/assets/icons/people.svg"
+import NotifsBing from "@/assets/icons/notification-bing.svg"
 import PaymentNotifCard from "@/components/ui/paymentNotifCard";
 
 

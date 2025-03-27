@@ -1,5 +1,5 @@
-import NotifsIcon from "../../assets/icons/notification.svg";
-import UserPlaceholderIcon from "../../assets/icons/user.svg";
+import NotifsIcon from "@/assets/icons/notification.svg";
+import UserPlaceholderIcon from "@/assets/icons/user.svg";
 
 const NavBar = ()=>{
 

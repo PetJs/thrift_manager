@@ -1,8 +1,8 @@
-import MasterCard from "../../assets/icons/cdnlogo.com_mastercard 1.svg";
-import Delete from "../../assets/icons/delete.svg";
-import Card from "../../assets/icons/card.svg";
-import Vector from "../../assets/icons/Vector.svg";
-import FlutterWave from "../../assets/icons/flutterwaveLogo.svg"
+import MasterCard from "@/assets/icons/mastercard.svg";
+import Delete from "@/assets/icons/delete.svg";
+import Card from "@/assets/icons/card.svg";
+import Vector from "@/assets/icons/Vector.svg";
+import FlutterWave from "@/assets/icons/flutterwaveLogo.svg"
 
 
 const PaymentDetailsPage = ()=>{
