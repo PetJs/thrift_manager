@@ -1,15 +1,20 @@
 import { Button } from "@/components/ui/button";
-import Lock from "../../assets/icons/lock.svg"
-import SMS from "../../assets/icons/sms.svg";
-import { Link } from "react-router-dom";
+import Lock from "@/assets/icons/lock.svg"
+import SMS from "@/assets/icons/sms.svg";
+import { Link, useNavigate } from "react-router-dom";
 import useUserStore from "@/store/user-store";
 
 export default function SignIn() {
   const { currentRole } = useUserStore();
+  const navigate = useNavigate();
+
+  function handleSubmit() {
+    navigate('/');
+  }
 
     return (
       <>
-        <form className="bg-white rounded-2xl shadow-md w-[400px] p-6">
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md w-[400px] p-6">
           <div className="flex flex-col items-center mb-6 mt-6">
             <div className="flex items-center mb-2">
               <div className="w-4 h-4 bg-blue-600 rounded-full mr-1"></div>
@@ -49,14 +54,12 @@ export default function SignIn() {
               </span>
             </div>
           </div>
-          <Link to="/otp-verification">
             <Button
                 type="submit"
                 className="w-full bg-[#2341AA] text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 cursor-pointer mb-6"
             >
                 Sign in
             </Button>
-          </Link>
         </form>
         <div className="text-center mt-4 text-sm text-white">
             Forgot your password? <Link to="/reset-password" className="text-white hover:underline cursor-pointer"> Reset Password </Link>
