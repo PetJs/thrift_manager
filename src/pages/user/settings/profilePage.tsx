@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Avatar from "@/assets/image.jfif";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useUserStore from "@/store/user-store";
 import { UserService } from "@/services/user-service";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const ProfilePage = () => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
     name: "",

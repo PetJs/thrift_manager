@@ -89,7 +89,7 @@ export type ApiResponse<T> = {
 export type DashboardData = {
   amount_contributed: string;
   total_contributed: string;
-  group: string;
+  group: Group;
   countdown: string;
   member_contribution_status: string;
   upcoming_payouts: string;

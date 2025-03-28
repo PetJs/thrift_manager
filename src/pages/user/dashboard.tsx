@@ -13,6 +13,8 @@ export default function Dashboard() {
     queryFn: UserService.dashboardData,
   });
 
+  console.log(data);
+
   if (isLoading) {
     return (
       <div className="flex items-center flex-col justify-center h-[80vh]">
@@ -66,7 +68,7 @@ export default function Dashboard() {
               }
               amount={data.member_contribution_status}
               description="Members' Contribution Status"
-              tag={data.group}
+              tag={data.group.name}
             />
             <Card
               icon={

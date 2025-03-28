@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Hamburger from "@/assets/icons/hamburger.svg";
 import { Link } from "react-router-dom";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminService } from "@/services/admin-service";
 import { Loader2 } from "lucide-react";
 import useUserStore from "@/store/user-store";
@@ -20,9 +20,18 @@ import { AxiosError } from "axios";
 type Status = "Active" | "Inactive";
 
 const payoutColumns = [
-  { header: "Group Number", accessor: "groupNo" },
+  { header: "Group Number", accessor: "id" },
   { header: "Name", accessor: "name" },
-  { header: "Payout Month", accessor: "date_created" },
+  {
+    header: "Payout Month",
+    accessor: "date_created",
+    render: (date_created: Date) => {
+      const month = new Date(date_created).toLocaleString("en", {
+        month: "long",
+      });
+      return <p>{month}</p>;
+    },
+  },
   {
     header: "Status",
     accessor: "status",
@@ -72,6 +81,7 @@ const payoutColumns = [
 ];
 
 const GroupsPage = () => {
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
@@ -79,12 +89,11 @@ const GroupsPage = () => {
     queryFn: AdminService.getGroups,
   });
 
-  const queryClient = new QueryClient();
-
   const createGroupMutation = useMutation({
     mutationFn: AdminService.createGroup,
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["groups"] });
+      toast.success("group created successfully");
     },
     onError(err) {
       toast.error(
@@ -136,7 +145,7 @@ const GroupsPage = () => {
         )}
         <CreateGroupModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(createGroupMutation.isPending)}
+          onClose={() => setIsModalOpen(false)}
           onSubmit={handleCreateGroup}
           disabled={createGroupMutation.isPending}
         />

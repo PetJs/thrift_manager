@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useUserStore from "@/store/user-store";
 import { UserService } from "@/services/user-service";
 import { toast } from "sonner";
@@ -11,7 +11,7 @@ import { toast } from "sonner";
 const AdminProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
     name: "",

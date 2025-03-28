@@ -35,6 +35,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
     setGroupName("");
     setContributionAmount("");
     setDescription("");
+    onClose();
   };
 
   return (

@@ -41,7 +41,9 @@ const columns = [
     header: "Month",
     accessor: "start_date",
     render: (start_date: Date) => {
-      return <p>{start_date.toLocaleString("en", { month: "long" })}</p>;
+      return (
+        <p>{new Date(start_date).toLocaleString("en", { month: "long" })}</p>
+      );
     },
   },
   { header: "Amount", accessor: "amount" },
