@@ -131,29 +131,34 @@ const routes = [
         name: 'Admin',
         path: '/admin',
         element: UsersRoutes,
+        requiredRole: "admin",
         routes: [
           {
             name: 'Admin Dashboard',
             title: 'Dashboard',
             element: AdminDashboard,
+            requiredRole: "admin",
             path: 'dashboard'
           },
           {
             name: 'Groups',
             title: 'Groups',
             element: GroupsPage,
+            requiredRole: "admin",
             path: 'groups'
           },
           {
             name: 'Admin Schedule',
             title: 'Admin Schedule',
             element: AdminSchedule,
+            requiredRole: "admin",
             path: 'schedule'
           },
           {
             name: 'Settings',
             title: 'Settings',
             element: AdminSettingsLayout,
+            requiredRole: "admin",
             path: 'settings',
             routes: [
               // set up sub-routes inside here
