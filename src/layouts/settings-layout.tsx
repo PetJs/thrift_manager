@@ -5,10 +5,10 @@ export default function SettingLayout() {
     
 
     const settingItems = [
-        { label: "My Profile", path: "/settings/profile" },
-        { label: "Payment and Bank Details", path: "/settings/payment-details" },
-        { label: "Notification Prefrences", path: "/settings/notification" },
-        { label: "Security Settings", path: "/settings/security" },
+        { label: "My Profile", path: "/users/settings/profile" },
+        { label: "Payment and Bank Details", path: "/users/settings/payment-details" },
+        { label: "Notification Prefrences", path: "/users/settings/notification" },
+        { label: "Security Settings", path: "/users/settings/security" },
     ]
       
     return (

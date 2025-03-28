@@ -8,7 +8,7 @@ import FlutterWave from "@/assets/icons/flutterwaveLogo.svg"
 const PaymentDetailsPage = ()=>{
 
     return (
-        <div className="p-6 w-[50%]">
+        <div className="p-6 max-w-md">
             {/* Manage Card Section */}
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-medium mb-2">Manage Card</label>

@@ -8,8 +8,9 @@ export interface SidebarItem {
 }
 
 export interface SidebarProps {
-  items: SidebarItem[];
-  onLogout: () => void;
+    className: string;
+    items: SidebarItem[];
+    onLogout: () => void;
 }
 
 export interface NavBarProps {
@@ -18,9 +19,12 @@ export interface NavBarProps {
 
 export interface CardProps {
   icon: React.ReactNode;
-  amount: string;
-  description: string;
+  header?: string;
+  amount?: string;
+  description?: string;
   tag?: string;
+  current?: string;
+  next?: string;
   className?: string;
   actionText?: string;
   onActionClick?: () => void; // Optional action button click handler
@@ -29,6 +33,7 @@ export interface CardProps {
 export interface PaymentNotifCardProps {
   recipient: string;
   date: string;
+  amount?: string;
 }
 
 export interface TableColumn {
