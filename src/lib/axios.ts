@@ -9,7 +9,7 @@ export const publicApi = axios.create({
 
 export const authApi = axios.create({
   baseURL: SERVER_URL,
-  timeout: 6000,
+  timeout: 60000,
 });
 
 authApi.interceptors.request.use(

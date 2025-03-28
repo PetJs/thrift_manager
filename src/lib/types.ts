@@ -109,3 +109,13 @@ export type Contribution = {
   group: number;
   payout_to: number;
 };
+
+export type Group = {
+  id: number;
+  name: string;
+  contribution_amount: string;
+  description: string;
+  date_created: Date;
+  status: string;
+  created_by: number;
+};

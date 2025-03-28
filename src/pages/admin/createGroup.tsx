@@ -12,32 +12,29 @@ import { Button } from "@/components/ui/button";
 type CreateGroupModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (groupData: { groupNumber: string; contributionAmount: string; members: string[] }) => void;
+  onSubmit: (groupData: {
+    name: string;
+    contributionAmount: string;
+    description: string;
+  }) => void;
+  disabled: boolean;
 };
 
-const CreateGroupModal: React.FC<CreateGroupModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const [groupNumber, setGroupNumber] = useState("");
+const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  disabled,
+}) => {
+  const [name, setGroupName] = useState("");
   const [contributionAmount, setContributionAmount] = useState("");
-  const [members, setMembers] = useState<string[]>([]);
-  const [currentMember, setCurrentMember] = useState("");
-
-  const addMember = () => {
-    if (currentMember.trim() && !members.includes(currentMember)) {
-      setMembers([...members, currentMember.trim()]);
-      setCurrentMember("");
-    }
-  };
-
-  const removeMember = (member: string) => {
-    setMembers(members.filter((m) => m !== member));
-  };
+  const [description, setDescription] = useState<string>("");
 
   const handleSubmit = () => {
-    onSubmit({ groupNumber, contributionAmount, members });
-    onClose();
-    setGroupNumber("");
+    onSubmit({ name, contributionAmount, description });
+    setGroupName("");
     setContributionAmount("");
-    setMembers([]);
+    setDescription("");
   };
 
   return (
@@ -49,53 +46,47 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({ isOpen, onClose, on
         </DialogHeader>
         <div className="space-y-6 flex flex-col">
           <div>
-            <label htmlFor="groupNumber" className="block text-sm font-medium">
-              Group Number
+            <label htmlFor="name" className="block text-sm font-medium">
+              Group Name
             </label>
             <Input
-              id="groupNumber"
-              placeholder="Enter group number"
-              value={groupNumber}
-              onChange={(e) => setGroupNumber(e.target.value)}
+              id="name"
+              placeholder="Enter group name"
+              value={name}
+              onChange={(e) => setGroupName(e.target.value)}
             />
           </div>
           <div>
-            <label htmlFor="contributionAmount" className="block text-sm font-medium">
+            <label
+              htmlFor="contributionAmount"
+              className="block text-sm font-medium"
+            >
               Contribution Amount
             </label>
             <Input
               id="contributionAmount"
-              placeholder="Enter amount (e.g., NGN 120,000)"
+              placeholder="Enter amount"
               value={contributionAmount}
               onChange={(e) => setContributionAmount(e.target.value)}
             />
           </div>
           <div>
-            <label htmlFor="addMembers" className="block text-sm font-medium">
-              Add Members
+            <label htmlFor="description" className="block text-sm font-medium">
+              Description
             </label>
-            <div className="flex items-center space-x-2">
-              <Input
-                id="addMembers"
-                placeholder="Enter member name"
-                value={currentMember}
-                onChange={(e) => setCurrentMember(e.target.value)}
-              />
-              <Button onClick={addMember} className="bg-blue-700">Add</Button>
-            </div>
-            <div className="mt-2 space-y-1">
-              {members.map((member) => (
-                <div key={member} className="flex items-center justify-between">
-                  <span>{member}</span>
-                  <Button variant="ghost" size="sm" onClick={() => removeMember(member)}>
-                    Remove
-                  </Button>
-                </div>
-              ))}
-            </div>
+            <Input
+              id="description"
+              placeholder=""
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
           <div className="mt-4 ml-auto">
-            <Button onClick={handleSubmit} className="bg-blue-700">
+            <Button
+              onClick={handleSubmit}
+              className="bg-blue-700"
+              disabled={disabled}
+            >
               Create Group
             </Button>
           </div>
