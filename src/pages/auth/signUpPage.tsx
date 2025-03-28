@@ -31,12 +31,13 @@ const signUnSchema = z.object({
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { setUser } = useUserStore();
+  const { setUser, setTokens } = useUserStore();
 
   const registerMutation = useMutation({
     mutationFn: AuthService.registerUser,
     onSuccess: (resp) => {
-      setUser({ user: resp.data.data });
+      setUser({ user: resp.data.user });
+      setTokens(resp.data.token, "");
       toast.success("Woo hoo signed up");
       navigate("/");
     },

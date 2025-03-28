@@ -8,9 +8,9 @@ export interface SidebarItem {
 }
 
 export interface SidebarProps {
-    className: string;
-    items: SidebarItem[];
-    onLogout: () => void;
+  className: string;
+  items: SidebarItem[];
+  onLogout: () => void;
 }
 
 export interface NavBarProps {
@@ -28,6 +28,7 @@ export interface CardProps {
   className?: string;
   actionText?: string;
   onActionClick?: () => void; // Optional action button click handler
+  disabled?: boolean;
 }
 
 export interface PaymentNotifCardProps {
@@ -75,7 +76,7 @@ export type AuthCredentials = {
 };
 
 export type AuthUser = {
-  data: User;
+  user: User;
   token: string;
 };
 
@@ -83,4 +84,28 @@ export type ApiResponse<T> = {
   status_code: number;
   message: string;
   data: T;
+};
+
+export type DashboardData = {
+  amount_contributed: string;
+  total_contributed: string;
+  group: string;
+  countdown: string;
+  member_contribution_status: string;
+  upcoming_payouts: string;
+  my_rotation: string;
+  is_my_turn: boolean;
+  contribution: string;
+};
+
+export type Contribution = {
+  id: number;
+  amount: number;
+  position: number;
+  status: string;
+  payout_status: string;
+  start_date: Date;
+  end_date: Date;
+  group: number;
+  payout_to: number;
 };

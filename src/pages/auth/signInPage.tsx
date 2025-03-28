@@ -27,16 +27,17 @@ const signInSchema = z.object({
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const { setUser, currentRole, setCurrentRole } = useUserStore();
+  const { setUser, currentRole, setCurrentRole, setTokens } = useUserStore();
   const isAdmin = useMemo(() => currentRole === "admin", [currentRole]);
 
   const loginMutation = useMutation({
     mutationFn:
       currentRole === "admin" ? AuthService.loginAdmin : AuthService.loginUser,
     onSuccess: (resp) => {
-      setUser({ user: resp.data.data });
+      setUser({ user: resp.data.user });
+      setTokens(resp.data.token, "");
       toast.success("Woo hoo signed in");
-      navigate("/admin/dashboard");
+      navigate(isAdmin ? "/admin/dashboard" : "/user/dashboard");
     },
     onError: (err) => {
       console.log(err);
