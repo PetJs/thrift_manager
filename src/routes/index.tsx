@@ -17,7 +17,19 @@ import SignUp from "@/pages/auth/signUpPage";
 import AdminDashboard from "@/pages/admin/dashboard";
 import GroupsPage from "@/pages/admin/groups";
 import AdminSchedule from "@/pages/admin/schedule";
-import AdminSettings from "@/pages/admin/settings";
+import AdminProfile from "@/pages/admin/settings/profilePage";
+import AdminPayment from "@/pages/admin/settings/paymentPage";
+import AdminGeneralSetting from "@/pages/admin/settings/generalSettings";
+import AdminNotifs from "@/pages/admin/settings/notificationPage";
+import AdminSecuritySetting from "@/pages/admin/settings/securitySettings";
+import { Outlet } from "react-router-dom";
+import AdminSettingsLayout from "@/layouts/adminSettings-layout";
+
+const UsersRoutes = () => {
+    return (
+      <Outlet /> // This ensures nested routes render
+    );
+};
 
 const routes = [
   {
@@ -52,77 +64,79 @@ const routes = [
   {
     layout: DashboardLayout,
     routes: [
-      {
-        name: 'Users',
-        path: '/users', 
-        routes: [
-          {
-            name: "Dashboard",
-            title: "User Dashboard",
-            element: Dashboard,
-            path: "",
-          },
-          {
-            name: "Contributions",
-            title: "Contributions",
-            element: ContributionPage,
-            path: "/contributions",
-          },
-          {
-            name: "Schedules",
-            title: "Schedules",
-            element: SchedulePage,
-            path: "/schedule",
-          },
-          {
-            name: "Settings",
-            title: "Settings",
-            element: SettingLayout,
-            path: "/settings",
+        {
+            name: 'Users',
+            path: '/users',
+            element: UsersRoutes,
             routes: [
-              {
-                name: "Profile",
-                title: "Profile",
-                element: ProfilePage,
-                path: "profile",
-              },
-              {
-                name: "Payment",
-                title: "Payment",
-                element: PaymentDetailsPage,
-                path: "payment-details",
-              },
-              {
-                name: "Notification",
-                title: "Notification",
-                element: Reminders,
-                path: "notification",
-              },
-              {
-                name: "Security",
-                title: "Security",
-                element: SecuritySetting,
-                path: "security",
-              },
-              {
-                name: "Change Password",
-                title: "Change Password",
-                element: ChangePassowordPage,
-                path: "change-password",
-              },
-            ],
-          },
+                {
+                    name: "Dashboard",
+                    title: "User Dashboard",
+                    element: Dashboard,
+                    path: "dashboard",
+                },
+                {
+                    name: "Contributions",
+                    title: "Contributions",
+                    element: ContributionPage,
+                    path: "contributions",
+                },
+                {
+                    name: "Schedules",
+                    title: "Schedules",
+                    element: SchedulePage,
+                    path: "schedule",
+                },
+                {
+                    name: "Settings",
+                    title: "Settings",
+                    element: SettingLayout,
+                    path: "settings",
+                    routes: [
+                    {
+                        name: "Profile",
+                        title: "Profile",
+                        element: ProfilePage,
+                        path: "profile",
+                    },
+                    {
+                        name: "Payment",
+                        title: "Payment",
+                        element: PaymentDetailsPage,
+                        path: "payment-details",
+                    },
+                    {
+                        name: "Notification",
+                        title: "Notification",
+                        element: Reminders,
+                        path: "notification",
+                    },
+                    {
+                        name: "Security",
+                        title: "Security",
+                        element: SecuritySetting,
+                        path: "security",
+                    },
+                    {
+                        name: "Change Password",
+                        title: "Change Password",
+                        element: ChangePassowordPage,
+                        path: "change-password",
+                    },
+                ],
+            },
         ]
       }, 
       {
         name: 'Admin',
         path: '/admin',
+        element: UsersRoutes,
         routes: [
           {
             name: 'Admin Dashboard',
             title: 'Dashboard',
             element: AdminDashboard,
-            path: ''
+            path: 'dashboard'
           },
           {
             name: 'Groups',
@@ -139,10 +153,40 @@ const routes = [
           {
             name: 'Settings',
             title: 'Settings',
-            element: AdminSettings,
+            element: AdminSettingsLayout,
             path: 'settings',
             routes: [
               // set up sub-routes inside here
+              {
+                name: "Profile",
+                title: "Profile",
+                element: AdminProfile,
+                path: "profile",
+                },
+                {
+                    name: "Payment",
+                    title: "Payment",
+                    element: AdminPayment,
+                    path: "payment-details",
+                },
+                {
+                    name: "Notification",
+                    title: "Notification",
+                    element: AdminNotifs,
+                    path: "notification",
+                },
+                {
+                    name: "Security",
+                    title: "Security",
+                    element: AdminSecuritySetting,
+                    path: "security",
+                },
+                {
+                    name: "General",
+                    title: "General",
+                    element: AdminGeneralSetting,
+                    path: "general",
+                },
             ]
           },
         ]

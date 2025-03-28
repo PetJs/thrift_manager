@@ -67,8 +67,9 @@ export const generateRoutes = (mainRoutes: LayoutConfig[]) => {
         ))}
         <Route
           path="/"
-          element={<Navigate to={isAuthorized ? "/home" : "/signin"} />}
+          element={<Navigate to={isAuthorized ? "/users" : "/signin"} />}
         />
+        <Route path="*" element={<Navigate to="/" />} />
       </ReactRoutes>
     );
   };
