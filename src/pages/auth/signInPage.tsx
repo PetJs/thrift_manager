@@ -36,7 +36,7 @@ export default function SignIn() {
     onSuccess: (resp) => {
       setUser({ user: resp.data.data });
       toast.success("Woo hoo signed in");
-      navigate("/admin/dashboard");
+      navigate(isAdmin ? "/admin/dashboard" : "/users/dashboard");
     },
     onError: (err) => {
       console.log(err);

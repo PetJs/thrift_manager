@@ -30,7 +30,7 @@ const renderRoutes = (
       if (nestedRoutes && nestedRoutes.length > 0) {
         return (
           <Route key={`${path}-${index}`} path={path} element={<Element />}>
-            {renderRoutes(nestedRoutes, undefined, isAuthorized)}
+            {renderRoutes(nestedRoutes, parentLayout, isAuthorized)}
           </Route>
         );
       }
