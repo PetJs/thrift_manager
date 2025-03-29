@@ -35,11 +35,15 @@ export class UserService {
     return response.data.data;
   }
 
-  static async fundContribution(contribution_id: number, amount: number) {
+  static async fundContribution(
+    contribution_id: number,
+    amount: number,
+    is_wallet: boolean
+  ) {
     const data = {
       contribution_id,
       amount,
-      is_wallet: true,
+      is_wallet,
     };
 
     const response = await authApi.post("/payments/fund-contribution/", data);
