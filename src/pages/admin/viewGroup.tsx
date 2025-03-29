@@ -84,9 +84,9 @@ const contributionColumns = [
     accessor: "status",
     render: (status: string) => {
       const colors: Record<Status, string> = {
-        unpaid: "bg-yellow-100 text-yellow-700",
+        unpaid: "bg-red-100 text-red-700",
         paid: "bg-blue-100 text-blue-700",
-        pending: 'bg-'
+        pending: 'bg-yellow-100 text-yellow-700'
       };
       return (
         <span

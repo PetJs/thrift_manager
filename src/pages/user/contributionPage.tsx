@@ -3,7 +3,7 @@ import { UserService } from "@/services/user-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
-type Status = "Paid" | "Pending" | "Upcoming";
+type Status = "paid" | "pending" | "upcoming";
 
 const paymentData = [
   {
@@ -52,9 +52,9 @@ const columns = [
     accessor: "status",
     render: (status: string) => {
       const colors: Record<Status, string> = {
-        Paid: "bg-green-100 text-green-700",
-        Pending: "bg-yellow-100 text-yellow-700",
-        Upcoming: "bg-blue-100 text-blue-700",
+        paid: "bg-green-100 text-green-700",
+        pending: "bg-yellow-100 text-yellow-700",
+        upcoming: "bg-blue-100 text-blue-700",
       };
       return (
         <div
