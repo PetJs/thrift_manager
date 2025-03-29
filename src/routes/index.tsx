@@ -24,6 +24,7 @@ import AdminNotifs from "@/pages/admin/settings/notificationPage";
 import AdminSecuritySetting from "@/pages/admin/settings/securitySettings";
 import { Outlet } from "react-router-dom";
 import AdminSettingsLayout from "@/layouts/adminSettings-layout";
+import ViewGroups from "@/pages/admin/viewGroup";
 
 const UsersRoutes = () => {
     return (
@@ -145,7 +146,21 @@ const routes = [
             title: 'Groups',
             element: GroupsPage,
             requiredRole: "admin",
-            path: 'groups'
+            path: 'groups',
+            routes: [
+              {
+                name: 'View Groups',
+                title: 'View Groups',
+                element: ViewGroups,
+                path: 'groups/:id',
+                requiredRole: 'admin'
+                // routes: [
+                //   {
+                //     name: 
+                //   }
+                // ]
+              }
+          ]
           },
           {
             name: 'Admin Schedule',

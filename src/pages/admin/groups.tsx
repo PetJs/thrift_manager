@@ -9,7 +9,7 @@ import {
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
 import Hamburger from "@/assets/icons/hamburger.svg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminService } from "@/services/admin-service";
 import { Loader2 } from "lucide-react";
@@ -54,17 +54,20 @@ const payoutColumns = [
   {
     header: "",
     accessor: "actions",
-    render: (_:any, row:any) => (
-      <DropdownMenu>
+    render: (_:any, row:any) => {
+      const navigate = useNavigate();
+
+      return (
+        <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="text-gray-500">
             <img src={Hamburger} alt="hamburger.svg" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <Link to={`/admin/groups/${row.id}`}>
+          <button onClick={() => {navigate(`/admin/groups/${row?.id}`)}}>
             <DropdownMenuItem>View Group</DropdownMenuItem>
-          </Link>
+          </button>
           <DropdownMenuItem onClick={() => console.log("Mark as Inactive")}>
             Mark as Inactive
           </DropdownMenuItem>
@@ -76,7 +79,12 @@ const payoutColumns = [
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    ),
+
+      )
+    }
+      
+     
+
   },
 ];
 
@@ -117,6 +125,9 @@ const GroupsPage = () => {
       created_by: user?.id as number,
     });
   };
+
+
+
 
   if (isError) {
     return <div>Something went wrong</div>;
