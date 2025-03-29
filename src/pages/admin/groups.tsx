@@ -9,7 +9,7 @@ import {
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
 import Hamburger from "@/assets/icons/hamburger.svg";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminService } from "@/services/admin-service";
 import { Loader2 } from "lucide-react";
