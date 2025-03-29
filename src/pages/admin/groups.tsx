@@ -9,7 +9,7 @@ import {
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
 import Hamburger from "@/assets/icons/hamburger.svg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminService } from "@/services/admin-service";
 import { Loader2 } from "lucide-react";
@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { Group, TableColumn } from "@/lib/types";
 
-type Status = "Active" | "Inactive";
+type Status = "active" | "inactive";
 
 const payoutColumns: TableColumn[] = [
   { header: "Group Number", accessor: "id" },
@@ -38,13 +38,13 @@ const payoutColumns: TableColumn[] = [
     accessor: "status",
     render: (status: string) => {
       const colors: Record<Status, string> = {
-        Inactive: "bg-blue-100 text-blue-700",
-        Active: "bg-yellow-100 text-yellow-700",
+        inactive: "bg-yellow-100 text-yellow-700",
+        active: "bg-blue-100 text-blue-700",
       };
       return (
         <span
           className={`px-3 py-1 rounded-full text-sm ${
-            colors[status as "Active" | "Inactive"]
+            colors[status as "active" | "inactive"]
           }`}
         >
           {status}

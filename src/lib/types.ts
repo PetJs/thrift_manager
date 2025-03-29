@@ -40,7 +40,7 @@ export interface PaymentNotifCardProps {
 export interface TableColumn {
   header: string;
   accessor: string;
-  render?: (value: any) => React.ReactNode;
+  render?: (value: any, row?: any) => React.ReactNode;
 }
 
 export interface TableProps {

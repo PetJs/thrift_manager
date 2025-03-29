@@ -92,7 +92,7 @@ export default function Dashboard() {
               }
               amount={data.member_contribution_status}
               description="Members' Contribution Status"
-              tag={data.group.name}
+              tag={data.group?.name}
             />
             <Card
               icon={
