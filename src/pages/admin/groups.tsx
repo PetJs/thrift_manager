@@ -17,7 +17,7 @@ import useUserStore from "@/store/user-store";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 
-type Status = "Active" | "Inactive";
+type Status = "active" | "inactive";
 
 const payoutColumns = [
   { header: "Group Number", accessor: "id" },
@@ -37,13 +37,13 @@ const payoutColumns = [
     accessor: "status",
     render: (status: string) => {
       const colors: Record<Status, string> = {
-        Inactive: "bg-blue-100 text-blue-700",
-        Active: "bg-yellow-100 text-yellow-700",
+        inactive: "bg-yellow-100 text-yellow-700",
+        active: "bg-blue-100 text-blue-700",
       };
       return (
         <span
           className={`px-3 py-1 rounded-full text-sm ${
-            colors[status as "Active" | "Inactive"]
+            colors[status as "active" | "inactive"]
           }`}
         >
           {status}

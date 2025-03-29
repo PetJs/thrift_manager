@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
   Select, 
   SelectContent, 
@@ -12,14 +12,12 @@ import { Label } from "@/components/ui/label";
 
 const AdminGeneralSetting = () => {
   const [groupLimit, setGroupLimit] = useState("12");
-  const [paymentDeadline, setPaymentDeadline] = useState("Last 7 days");
   const [automatedReminders, setAutomatedReminders] = useState(true);
   const group = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   const handleSaveChanges = () => {
     console.log({
       groupLimit,
-      paymentDeadline,
       automatedReminders
     });
   };
@@ -48,7 +46,7 @@ const AdminGeneralSetting = () => {
       <div className="space-y-6 mb-6 ">
         <Label>Payment Deadline</Label>
         <div className="flex items-center justify-between bg-gray-300 p-1 rounded-lg">
-          <span>{paymentDeadline}</span>
+          <span>Last 7 Days</span>
           <Button variant="ghost" size="sm">Edit</Button>
         </div>
       </div>
