@@ -6,6 +6,7 @@ import RefreshIcon from "../assets/icons/refresh-2.svg";
 import SettingIcon from "../assets/icons/setting.svg";
 import { Outlet } from "react-router-dom";
 import useUserStore from "@/store/user-store";
+import { useMemo } from "react";
 
 export default function DashboardLayout() {
   const items = [
@@ -22,8 +23,9 @@ export default function DashboardLayout() {
         { icon: SettingIcon, label: "Settings", path: "/admin/settings/profile" },
     ];
 
-  const { reset, currentRole } = useUserStore();
-  console.log("Current Role:", currentRole);
+    const { reset, currentRole} = useUserStore();
+    const isAdmin = useMemo(() => currentRole === "admin", [currentRole]);
+    console.log(isAdmin);
 
 
   const handleLogout = () => {
@@ -35,7 +37,7 @@ export default function DashboardLayout() {
     <main className="flex relative">
       <div className="flex-1 h-screen relative">
         {/* <SideBar items={items} className=" text-white" onLogout={handleLogout} />  */}
-        <SideBar items={currentRole == "admin" ? adminitems : items} className={currentRole == "admin" ? "bg-blue-700 text-gray-400" : "bg-white"} onLogout={handleLogout} /> 
+        <SideBar items={!isAdmin ? adminitems : items} className={!isAdmin ? "bg-blue-700 text-white" : "bg-white"} onLogout={handleLogout} /> 
         <NavBar />
         <div className="mt-8 mr-4 w-full md:max-w-[80%] md:absolute md:right-0 md:left-auto">
           <Outlet />
