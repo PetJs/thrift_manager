@@ -1,29 +1,30 @@
 import CustomTable from "@/components/ui/table";
+import { formatToNaira } from "@/lib/types";
 import { UserService } from "@/services/user-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
-type Status = "paid" | "pending" | "upcoming";
+type Status = "active" | "inactive" | "upcoming";
 
 const paymentData = [
   {
     start_date: "January",
     amount: "NGN10,000",
-    status: "Paid",
+    status: "active",
     end_date: "20th Jan, 2025",
     receiptLink: "#",
   },
   {
     start_date: "February",
     amount: "NGN10,000",
-    status: "Pending",
+    status: "inactive",
     end_date: "20th Jan, 2025",
     receiptLink: "#",
   },
   {
     start_date: "March",
     amount: "NGN10,000",
-    status: "Paid",
+    status: "active",
     end_date: "20th Jan, 2025",
     receiptLink: "#",
   },
@@ -46,14 +47,21 @@ const columns = [
       );
     },
   },
-  { header: "Amount", accessor: "amount" },
+  { 
+    header: "Amount", 
+    accessor: "amount", 
+    Cell: ({ value }: { value: string }) => {
+      const numericValue = Number(value.replace(/[^0-9.]/g, "")); // Extract number
+      return formatToNaira(numericValue);
+    },
+  },
   {
     header: "Status",
     accessor: "status",
     render: (status: string) => {
       const colors: Record<Status, string> = {
-        paid: "bg-green-100 text-green-700",
-        pending: "bg-yellow-100 text-yellow-700",
+        active: "bg-green-100 text-green-700",
+        inactive: "bg-yellow-100 text-yellow-700",
         upcoming: "bg-blue-100 text-blue-700",
       };
       return (

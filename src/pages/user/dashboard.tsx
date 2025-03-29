@@ -9,6 +9,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import useUserStore from "@/store/user-store";
 import { PAYSTACK_PUBLIC_KEY } from "@/lib/constant";
+import { formatToNaira } from "@/lib/types";
 
 export default function Dashboard() {
   // Load Paystack script
@@ -179,8 +180,7 @@ export default function Dashboard() {
                   className="w-[20px] h-[20px]"
                 />
               }
-              //   @ts-expect-error - "TODO: fix type"
-              amount={data.wallet.amount}
+              amount={formatToNaira(data.wallet.amount)}
               description="Wallet Balance"
               actionText="Fund Wallet"
               onActionClick={handleFundWallet}
