@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Card from "@/components/ui/card";
 import DollarIcon from "@/assets/icons/dollar-square.svg";
 import People from "@/assets/icons/people.svg";
@@ -12,8 +12,6 @@ import { PAYSTACK_PUBLIC_KEY } from "@/lib/constant";
 import { formatToNaira } from "@/lib/types";
 
 export default function Dashboard() {
-  const [, setPaymentAmount] = useState<number | null>(null);
-
   // Load Paystack script
   useEffect(() => {
     if (!document.getElementById("paystack-script")) {
@@ -34,47 +32,35 @@ export default function Dashboard() {
     queryFn: UserService.dashboardData,
   });
 
-  const fundContributionMutation = useMutation({
+  const paymentMutation = useMutation({
     mutationFn: async ({
       contribution_id,
       amount,
+      is_wallet,
     }: {
       contribution_id: number;
       amount: number;
-    }) => UserService.fundContribution(contribution_id, amount),
+      is_wallet: boolean;
+    }) => UserService.fundContribution(contribution_id, amount, is_wallet),
     onSuccess: () => {
-      toast.success("Contribution funded successfully!");
+      toast.success("Payment successfully!");
       refetch();
     },
     onError: () => {
-      toast.error("Failed to fund contribution.");
+      toast.error("Failed to make payment.");
     },
   });
 
   const { user } = useUserStore();
 
-  const handleMakePayment = () => {
+  const handleMakeContribution = () => {
     if (!data?.contribution) {
       toast.error("No contribution found.");
       return;
     }
 
     // Prompt user for amount
-    const userInput = window.prompt("Enter the amount to contribute:");
-
-    if (!userInput) {
-      toast.info("Payment canceled.");
-      return;
-    }
-
-    const amount = parseFloat(userInput);
-
-    if (isNaN(amount) || amount <= 0) {
-      toast.error("Please enter a valid amount.");
-      return;
-    }
-
-    setPaymentAmount(amount);
+    const amount = data.contribution.amount;
 
     if (!(window as any).PaystackPop) {
       toast.error("Payment system is not ready. Please try again.");
@@ -93,9 +79,65 @@ export default function Dashboard() {
           const req = {
             contribution_id: data.contribution.id,
             amount: amount,
+            is_wallet: false,
           };
           console.log(req);
-          fundContributionMutation.mutate(req);
+          paymentMutation.mutate(req);
+        } catch (error) {
+          console.error(error);
+          toast.error("Error processing contribution.");
+        }
+      },
+      onClose: () => {
+        toast.info("Transaction was not completed.");
+      },
+    });
+
+    paystack.openIframe();
+  };
+
+  const handleFundWallet = () => {
+    if (!data?.contribution) {
+      toast.error("No contribution found.");
+      return;
+    }
+
+    // Prompt user for amount
+    const userInput = window.prompt("Enter the amount to fund:");
+
+    if (!userInput) {
+      toast.info("Payment canceled.");
+      return;
+    }
+
+    const amount = parseFloat(userInput);
+
+    if (isNaN(amount) || amount <= 0) {
+      toast.error("Please enter a valid amount.");
+      return;
+    }
+
+    if (!(window as any).PaystackPop) {
+      toast.error("Payment system is not ready. Please try again.");
+      return;
+    }
+
+    const paystack = (window as any).PaystackPop.setup({
+      key: PAYSTACK_PUBLIC_KEY,
+      email: user?.email,
+      amount: amount * 100,
+      currency: "NGN",
+      callback: function () {
+        toast.info("Processing payment...");
+
+        try {
+          const req = {
+            contribution_id: data.contribution.id,
+            amount: amount,
+            is_wallet: true,
+          };
+          console.log(req);
+          paymentMutation.mutate(req);
         } catch (error) {
           console.error(error);
           toast.error("Error processing contribution.");
@@ -140,6 +182,8 @@ export default function Dashboard() {
               }
               amount={formatToNaira(data.wallet.amount)}
               description="Wallet Balance"
+              actionText="Fund Wallet"
+              onActionClick={handleFundWallet}
             />
             <Card
               icon={
@@ -176,7 +220,7 @@ export default function Dashboard() {
               amount={data.countdown}
               description="Countdown to Deadline"
               actionText="Make Payment"
-              onActionClick={handleMakePayment}
+              onActionClick={handleMakeContribution}
               disabled={data.is_my_turn}
             />
           </div>
