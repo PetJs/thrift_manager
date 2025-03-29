@@ -37,12 +37,12 @@ export class UserService {
 
   static async fundContribution(
     contribution_id: number,
-    amount: number,
+    amount: number | string,
     is_wallet: boolean
   ) {
     const data = {
       contribution_id,
-      amount,
+      amount: typeof amount === "string" ? parseFloat(amount) : amount,
       is_wallet,
     };
 
