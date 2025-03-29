@@ -33,7 +33,7 @@ export default function AdminDashboard() {
         queryKey: ["payout", selectValue],
         queryFn: () =>
           selectValue ? AdminService.getPayoutSchedule(selectValue) : null,
-        enabled: !!selectValue, // Runs only when a group is selected
+        enabled: !!selectValue,
       },
     ],
   });
@@ -54,7 +54,6 @@ export default function AdminDashboard() {
     isError: isErrorPayout,
   } = payoutQuery;
 
-  // Handle group selection
   const handleGroupSelect = (value: string) => {
     setSelectValue(value);
     const groupName = groups?.find((g) => g.id.toString() === value)?.name;

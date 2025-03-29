@@ -102,6 +102,13 @@ export type DashboardData = {
   my_rotation: string;
   is_my_turn: boolean;
   contribution: Contribution;
+  wallet: Wallet;
+};
+
+export type Wallet = {
+  id: number;
+  amount: number;
+  user: number;
 };
 
 export type Contribution = {

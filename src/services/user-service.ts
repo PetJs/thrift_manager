@@ -39,6 +39,7 @@ export class UserService {
     const data = {
       contribution_id,
       amount,
+      is_wallet: true,
     };
 
     const response = await authApi.post("/payments/fund-contribution/", data);
