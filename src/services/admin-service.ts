@@ -1,5 +1,12 @@
 import { authApi } from "@/lib/axios";
-import { Contribution, Group, GroupMember, User } from "@/lib/types";
+import {
+  AdminDashboard,
+  Contribution,
+  Group,
+  GroupMember,
+  PayoutSchedule,
+  User,
+} from "@/lib/types";
 
 export class AdminService {
   static async getGroups(): Promise<Group[]> {
@@ -66,6 +73,16 @@ export class AdminService {
     const response = await authApi.post(
       `/admin/send-reminder/${contributionId}/`
     );
+    return response.data.data;
+  }
+
+  static async getDashboard(): Promise<AdminDashboard> {
+    const response = await authApi.get(`/admin/analytics-data/`);
+    return response.data.data;
+  }
+
+  static async getPayoutSchedule(groupId: string): Promise<PayoutSchedule> {
+    const response = await authApi.get(`/admin/payout-schedule/${groupId}`);
     return response.data.data;
   }
 }

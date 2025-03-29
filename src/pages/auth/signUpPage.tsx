@@ -19,15 +19,21 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { ApiResponse } from "@/lib/types";
 
-const signUnSchema = z.object({
+const signUpSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   name: z.string(),
   phone: z
     .string()
     .min(9, "Phone must be 9 characters")
-    .max(13, "Phone cant be more than 13"),
-  contribution_amount: z.number(),
+    .max(13, "Phone can't be more than 13"),
+  contribution_amount: z
+    .string()
+    .min(1, "Contribution amount is required")
+    .refine((val) => !isNaN(Number(val)), {
+      message: "Contribution amount must be a number",
+    })
+    .transform((val) => Number(val)), // Converts string to number
 });
 
 export default function SignUp() {
@@ -52,7 +58,7 @@ export default function SignUp() {
   });
 
   const form = useForm({
-    resolver: zodResolver(signUnSchema),
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
       password: "",

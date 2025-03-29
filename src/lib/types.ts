@@ -34,7 +34,7 @@ export interface CardProps {
 export interface PaymentNotifCardProps {
   recipient: string;
   date: string;
-  amount?: string;
+  amount?: number;
 }
 
 export interface TableColumn {
@@ -136,4 +136,21 @@ export type GroupMember = {
   status: string;
   user: number;
   group: number;
+};
+
+export type AdminDashboard = {
+  current_members: number;
+  new_members: number;
+  current_groups: number;
+  active_groups: number;
+  total_contribution: number;
+  total_payouts: number;
+  members_contributed: number;
+  members_contribution_pending: number;
+};
+
+export type PayoutSchedule = {
+  next_recipient: string;
+  amount: number;
+  date: string;
 };
