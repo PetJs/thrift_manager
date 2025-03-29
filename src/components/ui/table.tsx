@@ -20,7 +20,7 @@ const CustomTable: React.FC<TableProps> = ({ columns, data }) => {
               {columns.map((column, colIndex) => (
                 <td key={colIndex} className="py-4 px-2">
                   {column.render
-                    ? column.render(row[column.accessor])
+                    ? column.render(row[column.accessor], row)
                     : row[column.accessor]}
                 </td>
               ))}

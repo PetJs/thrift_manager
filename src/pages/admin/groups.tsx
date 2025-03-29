@@ -54,7 +54,7 @@ const payoutColumns = [
   {
     header: "",
     accessor: "actions",
-    render: () => (
+    render: (_:any, row:any) => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="text-gray-500">
@@ -62,7 +62,7 @@ const payoutColumns = [
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <Link to="/admin/settings/profile">
+          <Link to={`/admin/groups/${row.id}`}>
             <DropdownMenuItem>View Group</DropdownMenuItem>
           </Link>
           <DropdownMenuItem onClick={() => console.log("Mark as Inactive")}>
