@@ -20,8 +20,8 @@ import { Button } from "@/components/ui/button";
 import Hamburger from "@/assets/icons/hamburger.svg";
 import { toast } from "sonner";
 
-type Status = "Paid" | "Unpaid";
-type RStatus = "Upcoming" | "Received";
+type Status = "paid" | "unpaid";
+type RStatus = "upcoming" | "received";
 
 const AdminSchedule = () => {
   const [selectValue, setSelectValue] = useState("");
@@ -57,8 +57,8 @@ const AdminSchedule = () => {
         accessor: "status",
         render: (status: string) => {
           const colors: Record<Status, string> = {
-            Unpaid: "bg-red-100 text-red-700",
-            Paid: "bg-green-100 text-green-700",
+            unpaid: "bg-red-100 text-red-700",
+            paid: "bg-green-100 text-green-700",
           };
           return (
             <span
@@ -76,8 +76,8 @@ const AdminSchedule = () => {
         accessor: "payout_status",
         render: (status: string) => {
           const colors: Record<RStatus, string> = {
-            Received: "bg-blue-100 text-blue-700",
-            Upcoming: "bg-yellow-100 text-yellow-700",
+            received: "bg-blue-100 text-blue-700",
+            upcoming: "bg-yellow-100 text-yellow-700",
           };
           return (
             <span
