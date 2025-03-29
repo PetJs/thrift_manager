@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -9,23 +9,13 @@ import { UserService } from "@/services/user-service";
 import { toast } from "sonner";
 
 const AdminProfile = () => {
-  const [isEditing, setIsEditing] = useState(false);
-
   const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phoneNumber: "",
+    phone: "",
   });
-
-  const [editedPhoneNumber, setEditedPhoneNumber] = useState(
-    formData.phoneNumber
-  );
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedPhoneNumber(e.target.value);
-    setIsEditing(e.target.value !== formData.phoneNumber);
-  };
 
   const { user } = useUserStore();
 
@@ -36,11 +26,10 @@ const AdminProfile = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setFormData({
         name: data.name as string,
         email: data.email as string,
-        phoneNumber: data.phone as string,
+        phone: data.phone as string,
       });
     }
   }, [data]);
@@ -61,9 +50,7 @@ const AdminProfile = () => {
   const handleSaveChanges = () => {
     setFormData((prev) => ({
       ...prev,
-      phoneNumber: editedPhoneNumber,
     }));
-    setIsEditing(false);
     updateUserMutation.mutate();
   };
 
@@ -88,8 +75,12 @@ const AdminProfile = () => {
           <Input
             id="name"
             value={formData.name}
-            readOnly
-            className="bg-gray-100 cursor-not-allowed"
+            onChange={(e) => {
+              setFormData((prev) => ({
+                ...prev,
+                name: e.target.value,
+              }));
+            }}
           />
         </div>
 
@@ -98,8 +89,12 @@ const AdminProfile = () => {
           <Input
             id="email"
             value={formData.email}
-            readOnly
-            className="bg-gray-100 cursor-not-allowed"
+            onChange={(e) => {
+              setFormData((prev) => ({
+                ...prev,
+                email: e.target.value,
+              }));
+            }}
           />
         </div>
 
@@ -107,15 +102,20 @@ const AdminProfile = () => {
           <Label htmlFor="phoneNumber">Phone Number</Label>
           <Input
             id="phoneNumber"
-            value={editedPhoneNumber}
-            onChange={handlePhoneNumberChange}
+            value={formData.phone}
+            onChange={(e) => {
+              setFormData((prev) => ({
+                ...prev,
+                phone: e.target.value,
+              }));
+            }}
           />
         </div>
 
         <Button
           type="button"
           onClick={handleSaveChanges}
-          disabled={!isEditing || updateUserMutation.isPending}
+          disabled={updateUserMutation.isPending}
           className="ml-auto right mt-4 bg-blue-700"
         >
           Save Changes

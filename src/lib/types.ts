@@ -67,6 +67,7 @@ export type User = {
   phone: string;
   address: string;
   date_created: Date;
+  contribution_amount: number;
   role?: UserRole;
 };
 
@@ -92,10 +93,15 @@ export type DashboardData = {
   group: Group;
   countdown: string;
   member_contribution_status: string;
-  upcoming_payouts: string;
+  upcoming_payouts: {
+    position: number;
+    name: string;
+    amount: number;
+    date: Date;
+  }[];
   my_rotation: string;
   is_my_turn: boolean;
-  contribution: string;
+  contribution: Contribution;
 };
 
 export type Contribution = {
@@ -118,4 +124,16 @@ export type Group = {
   date_created: Date;
   status: string;
   created_by: number;
+};
+
+export type GroupMember = {
+  id: number;
+  position: number;
+  date_joined: Date;
+  is_admin: boolean;
+  is_owner: boolean;
+  is_manager: boolean;
+  status: string;
+  user: number;
+  group: number;
 };

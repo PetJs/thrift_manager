@@ -34,4 +34,14 @@ export class UserService {
     const response = await authApi.get(`/contributions/${groupId}/`);
     return response.data.data;
   }
+
+  static async fundContribution(contribution_id: number, amount: number) {
+    const data = {
+      contribution_id,
+      amount,
+    };
+
+    const response = await authApi.post("/payments/fund-contribution/", data);
+    return response.data.data;
+  }
 }

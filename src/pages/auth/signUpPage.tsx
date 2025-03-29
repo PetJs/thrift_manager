@@ -27,6 +27,7 @@ const signUnSchema = z.object({
     .string()
     .min(9, "Phone must be 9 characters")
     .max(13, "Phone cant be more than 13"),
+  contribution_amount: z.number(),
 });
 
 export default function SignUp() {
@@ -52,7 +53,13 @@ export default function SignUp() {
 
   const form = useForm({
     resolver: zodResolver(signUnSchema),
-    defaultValues: { email: "", password: "", name: "", phone: "" },
+    defaultValues: {
+      email: "",
+      password: "",
+      name: "",
+      phone: "",
+      contribution_amount: 0,
+    },
   });
 
   const onSubmit = async (values: {
@@ -60,6 +67,7 @@ export default function SignUp() {
     password: string;
     name: string;
     phone: string;
+    contribution_amount: number;
   }) => {
     registerMutation.mutate(values);
   };
@@ -114,6 +122,24 @@ export default function SignUp() {
                   <Input
                     type="text"
                     placeholder="Enter your Phone..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="contribution_amount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contribution Amount</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Contribution amount."
                     {...field}
                   />
                 </FormControl>

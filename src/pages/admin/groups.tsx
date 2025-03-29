@@ -16,10 +16,11 @@ import { Loader2 } from "lucide-react";
 import useUserStore from "@/store/user-store";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { Group, TableColumn } from "@/lib/types";
 
 type Status = "Active" | "Inactive";
 
-const payoutColumns = [
+const payoutColumns: TableColumn[] = [
   { header: "Group Number", accessor: "id" },
   { header: "Name", accessor: "name" },
   {
@@ -53,30 +54,34 @@ const payoutColumns = [
   },
   {
     header: "",
-    accessor: "actions",
-    render: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="text-gray-500">
-            <img src={Hamburger} alt="hamburger.svg" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <Link to="/admin/settings/profile">
-            <DropdownMenuItem>View Group</DropdownMenuItem>
-          </Link>
-          <DropdownMenuItem onClick={() => console.log("Mark as Inactive")}>
-            Mark as Inactive
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => console.log("Mark as Closed")}>
-            Mark as Closed
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => console.log("Send Reminder")}>
-            Send Reminder
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+    accessor: "id",
+    render: (id: Group) => {
+      if (!id) return <span>No data</span>;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="text-gray-500">
+              <img src={Hamburger} alt="hamburger.svg" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Link to={`/admin/groups/${id}`}>
+              <DropdownMenuItem>View Group</DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem onClick={() => console.log("Mark as Inactive")}>
+              Mark as Inactive
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log("Mark as Closed")}>
+              Mark as Closed
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log("Send Reminder")}>
+              Send Reminder
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];
 
@@ -128,7 +133,7 @@ const GroupsPage = () => {
         <h2 className="text-[22px] font-semibold mb-4">All Groups</h2>
         <hr className="w-[950px] border-gray-300 border-1" />
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col pb-20">
         <Button
           className="ml-auto bg-blue-700 mb-8 cursor-pointer"
           onClick={() => setIsModalOpen(true)}
