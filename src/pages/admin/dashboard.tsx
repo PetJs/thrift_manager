@@ -14,6 +14,7 @@ import { Loader, Loader2, AlertCircle } from "lucide-react";
 import DollarIcon from "@/assets/icons/dollar-square.svg";
 import People from "@/assets/icons/people.svg";
 import NotifsBing from "@/assets/icons/notification-bing.svg";
+import { formatToNaira } from "@/lib/types";
 
 export default function AdminDashboard() {
   const [selectValue, setSelectValue] = useState<string | null>(null);
@@ -115,8 +116,8 @@ export default function AdminDashboard() {
               />
             }
             header="Finances"
-            current={`Total Contributions: NGN ${details.total_contribution}`}
-            next={`Total Payouts: ${details.total_payouts}`}
+            current={`Total Contributions: ${formatToNaira(details.total_contribution)}`}
+            next={`Total Payouts: ${formatToNaira(details.total_payouts)}`}
             tag="This Month"
             className="bg-blue-600 text-white"
           />
