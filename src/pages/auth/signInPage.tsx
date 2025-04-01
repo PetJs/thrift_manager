@@ -40,16 +40,18 @@ export default function SignIn() {
     },
     onSuccess: (resp) => {
       console.log("Login Response:", resp.data);
-      const userRole = resp.data.user.role || "admin"; // Default to 'admin' if null
+      // Default to 'user' because the response doesn't include a role
+      const userRole = resp.data.user.role || currentRole  || "user";
       setUser({ user: resp.data.user });
       setCurrentRole(userRole);
-      localStorage.setItem("currentRole", userRole); // Persist role correctly
       setTokens(resp.data.token, "");
       toast.success("Woo hoo signed in");
-    
-      console.log("User Role after login:", userRole); // Now it won’t be null
-    
+
+      console.log("User Role after login:", userRole);
+      
+      // Navigate to the appropriate dashboard based on the role
       navigate(userRole === "admin" ? "/admin/dashboard" : "/users/dashboard");
+
     },
     onError: (err) => {
       console.error(err);
