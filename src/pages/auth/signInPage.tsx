@@ -25,22 +25,34 @@ const signInSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+
 export default function SignIn() {
   const navigate = useNavigate();
   const { setUser, currentRole, setCurrentRole, setTokens } = useUserStore();
+
   const isAdmin = useMemo(() => currentRole === "admin", [currentRole]);
 
+  console.log("Current Role before login:", currentRole);
+
   const loginMutation = useMutation({
-    mutationFn:
-      currentRole === "admin" ? AuthService.loginAdmin : AuthService.loginUser,
+    mutationFn: async (values: { email: string; password: string }) => {
+      return isAdmin ? AuthService.loginAdmin(values) : AuthService.loginUser(values);
+    },
     onSuccess: (resp) => {
+      console.log("Login Response:", resp.data);
+      const userRole = resp.data.user.role || "admin"; // Default to 'admin' if null
       setUser({ user: resp.data.user });
+      setCurrentRole(userRole);
+      localStorage.setItem("currentRole", userRole); // Persist role correctly
       setTokens(resp.data.token, "");
       toast.success("Woo hoo signed in");
-      navigate(isAdmin ? "/admin/dashboard" : "/users/dashboard");
+    
+      console.log("User Role after login:", userRole); // Now it won’t be null
+    
+      navigate(userRole === "admin" ? "/admin/dashboard" : "/users/dashboard");
     },
     onError: (err) => {
-      console.log(err);
+      console.error(err);
       const errorMessage =
         ((err as AxiosError).response?.data as ApiResponse<null>)?.message ||
         "Sign in Error";
@@ -58,8 +70,13 @@ export default function SignIn() {
   };
 
   const toggleRole = () => {
-    setCurrentRole(currentRole === "admin" ? "user" : "admin");
+    const newRole = currentRole === "admin" ? "user" : "admin";
+    setCurrentRole(newRole);
+    localStorage.setItem("currentRole", newRole);
+    console.log("New Role:", newRole);
   };
+
+  console.log("Current Role in Store:", currentRole);
 
   return (
     <div className="w-full max-w-[400px] bg-white rounded-2xl shadow-md p-6">
@@ -70,7 +87,7 @@ export default function SignIn() {
         {isAdmin ? "Sign in as User" : "Sign in as Admin"}
       </Button>
       <h1 className="text-xl font-bold text-gray-700 text-center mb-6">
-        Thrift Management {currentRole === "admin" ? "Admin" : "User"}
+        Thrift Management {isAdmin ? "Admin" : "User"}
       </h1>
 
       <Form {...form}>
@@ -123,7 +140,7 @@ export default function SignIn() {
 
       <div className="text-center mt-4 text-sm text-gray-600">
         <p>
-          Dont have an account?{" "}
+          Don't have an account?{" "}
           <Link to="/signup" className="text-blue-600 hover:underline">
             Sign up
           </Link>{" "}

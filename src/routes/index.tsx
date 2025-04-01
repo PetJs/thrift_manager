@@ -69,6 +69,7 @@ const routes = [
         name: "Users",
         path: "/users",
         element: UsersRoutes,
+        requiredRole: "user",
         routes: [
           {
             name: "Dashboard",
