@@ -4,7 +4,7 @@ import { PaymentNotifCardProps } from "@/lib/types";
 
 const PaymentNotifCard: React.FC<PaymentNotifCardProps> = ({ recipient, amount, date }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 w-[295px] h-[96px] flex justify-between">
+    <div className="bg-white shadow-md rounded-lg p-4 w-fit h-[96px] flex gap-4 justify-between">
         <div>
             <div className="text-[13px] font-medium text-gray-500 mb-2">Next Recipient:</div>
             <div className="text-[18px] font-semibold text-black">{recipient}</div>

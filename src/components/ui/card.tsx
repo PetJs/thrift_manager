@@ -15,8 +15,8 @@ const Card: React.FC<CardProps> = ({
   disabled,
 }) => {
   return (
-    <div className="flex flex-col w-[257px] h-[135px] bg-white shadow-lg rounded-xl p-4">
-      <div className="flex items-center justify-between mb-4">
+    <div className="flex flex-col w-fit  h-[135px] bg-white shadow-lg rounded-xl p-4">
+      <div className="flex items-center gap-10 justify-between mb-4">
         <div className="flex items-center gap-2">
           <div className="w-[35px] h-[35px] flex items-center justify-center bg-blue-100 rounded-full">
             {/* Ensure icon is passed as ReactNode */}
