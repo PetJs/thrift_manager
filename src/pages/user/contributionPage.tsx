@@ -3,39 +3,9 @@ import { formatToNaira } from "@/lib/types";
 import { UserService } from "@/services/user-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 type Status = "active" | "inactive" | "upcoming";
-
-const paymentData = [
-  {
-    start_date: "January",
-    amount: "NGN10,000",
-    status: "active",
-    end_date: "20th Jan, 2025",
-    receiptLink: "#",
-  },
-  {
-    start_date: "February",
-    amount: "NGN10,000",
-    status: "inactive",
-    end_date: "20th Jan, 2025",
-    receiptLink: "#",
-  },
-  {
-    start_date: "March",
-    amount: "NGN10,000",
-    status: "active",
-    end_date: "20th Jan, 2025",
-    receiptLink: "#",
-  },
-  {
-    start_date: "April",
-    amount: "NGN10,000",
-    status: "Upcoming",
-    end_date: "20th Jan, 2025",
-    receiptLink: "#",
-  },
-];
 
 const columns = [
   {
@@ -47,9 +17,9 @@ const columns = [
       );
     },
   },
-  { 
-    header: "Amount", 
-    accessor: "amount", 
+  {
+    header: "Amount",
+    accessor: "amount",
     Cell: ({ value }: { value: string }) => {
       const numericValue = Number(value.replace(/[^0-9.]/g, "")); // Extract number
       return formatToNaira(numericValue);
@@ -57,7 +27,7 @@ const columns = [
   },
   {
     header: "Status",
-    accessor: "status",
+    accessor: "payout_status",
     render: (status: string) => {
       const colors: Record<Status, string> = {
         active: "bg-green-100 text-green-700",
@@ -77,13 +47,27 @@ const columns = [
   },
   { header: "Date Paid", accessor: "end_date" },
   {
-    header: "Receipt",
-    accessor: "receiptLink",
-    render: (link: string) => (
-      <a href={link} className="text-blue-600 underline">
-        Download Receipt
-      </a>
-    ),
+    header: "id",
+    accessor: "id",
+    render: (id: string) => {
+      return (
+        <a
+          href="#"
+          className="text-blue-600 underline"
+          onClick={async () => {
+            try {
+              await UserService.downloadReceipt(id);
+              toast.success("receipt sent to your email");
+            } catch (err) {
+              console.error(err);
+              toast.error("unable to download receipt");
+            }
+          }}
+        >
+          Download Receipt
+        </a>
+      );
+    },
   },
 ];
 
@@ -93,9 +77,9 @@ const ContributionPage = () => {
     queryFn: UserService.getContributions,
   });
 
-  const currentMonth = new Date().toLocaleString("en", { month: "long" });
+  const currentMonth = new Date();
   const currentMonthStatus =
-    paymentData.find((item) => item.start_date === currentMonth)?.status ||
+    (data && data.find((item) => item.start_date === currentMonth)?.status) ||
     "Unknown";
 
   if (isLoading) {

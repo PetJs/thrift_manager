@@ -49,4 +49,11 @@ export class UserService {
     const response = await authApi.post("/payments/fund-contribution/", data);
     return response.data.data;
   }
+
+  static async downloadReceipt(contribution_id: string) {
+    const response = await authApi.get(
+      `/contributions/receipt/${contribution_id}/`
+    );
+    return response.data.data;
+  }
 }

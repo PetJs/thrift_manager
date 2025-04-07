@@ -67,7 +67,7 @@ export type User = {
   phone: string;
   address: string;
   date_created: Date;
-  contribution_amount: number;
+  contribution: Contribution;
   role?: UserRole;
 };
 
@@ -162,10 +162,9 @@ export type PayoutSchedule = {
   date: string;
 };
 
-export const formatToNaira = (amount:any) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
-    }).format(amount);
+export const formatToNaira = (amount: any) => {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(amount);
 };
-  
