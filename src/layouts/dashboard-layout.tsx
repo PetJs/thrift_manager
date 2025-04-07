@@ -37,7 +37,7 @@ export default function DashboardLayout() {
     <main className="flex relative">
       <div className="flex-1 h-screen relative">
         {/* <SideBar items={items} className=" text-white" onLogout={handleLogout} />  */}
-        <SideBar items={isAdmin ? adminitems : items} className={isAdmin ? "bg-blue-700 text-white" : "bg-white"} onLogout={handleLogout} /> 
+        <SideBar items={isAdmin ? adminitems : items} className={isAdmin ? "bg-blue-700 text-white" : "bg-white text-gray-700"} onLogout={handleLogout} /> 
         <NavBar />
         <div className="mt-8 mr-4 w-full md:max-w-[80%] md:absolute md:right-0 md:left-auto">
           <Outlet />
