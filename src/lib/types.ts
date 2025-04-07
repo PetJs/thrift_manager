@@ -69,6 +69,7 @@ export type User = {
   date_created: Date;
   contribution: Contribution;
   role?: UserRole;
+  avatar?: string;
 };
 
 export type AuthCredentials = {
