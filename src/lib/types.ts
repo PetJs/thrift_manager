@@ -67,7 +67,8 @@ export type User = {
   phone: string;
   address: string;
   date_created: Date;
-  contribution: Contribution;
+  contribution_amount: number;
+  group?: number;
   role?: UserRole;
 };
 
