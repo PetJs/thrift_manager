@@ -70,6 +70,7 @@ export type User = {
   contribution_amount: number;
   group?: number;
   role?: UserRole;
+  avatar?: string;
 };
 
 export type AuthCredentials = {

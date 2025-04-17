@@ -13,7 +13,7 @@ const SideBar: React.FC<SidebarProps> = ({ items, onLogout, className }) => {
             <div className="flex items-center ">
                 <div className="w-[12px] h-[12px] bg-blue-600 rounded-full "></div>
                 <div className="w-[12px] h-[12px] bg-blue-600 rounded-full"></div>
-                <h1 className="text-[14px] font-bold text-gray-700 ml-1">
+                <h1 className="text-[14px] font-bold  ml-1">
                 Thrift Management App
                 </h1>
             </div>
@@ -28,7 +28,7 @@ const SideBar: React.FC<SidebarProps> = ({ items, onLogout, className }) => {
                 className={`flex gap-6 items-center px-6 py-3 cursor-pointer ${
                     location.pathname === item.path
                     ? "border-l-3 border-blue-700 "
-                    : "text-gray-700 hover:bg-gray-100"
+                    : " hover:bg-gray-100"
                 }`}
                 >
                 <img
@@ -46,7 +46,7 @@ const SideBar: React.FC<SidebarProps> = ({ items, onLogout, className }) => {
         <div className="mt-72">
             <button
             onClick={onLogout}
-            className="flex gap-6 items-center w-full px-6 py-3 cursor-pointer text-gray-700 text-lg hover:border-l-2 hover:border-blue-700 "
+            className="flex gap-6 items-center w-full px-6 py-3 cursor-pointer  text-lg hover:border-l-2 hover:border-blue-700 "
             >
             <img
                 src={LogoutIcon}
