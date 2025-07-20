@@ -8,7 +8,7 @@ const CustomTable: React.FC<TableProps> = ({ columns, data }) => {
         <thead>
           <tr className="border-b text-[17px]">
             {columns.map((column, index) => (
-              <th key={index} className="py-6 px-4 text-[17px]">
+              <th key={index} className="py-4 px-2 text-[17px]">
                 {column.header}
               </th>
             ))}
@@ -18,9 +18,9 @@ const CustomTable: React.FC<TableProps> = ({ columns, data }) => {
           {data.map((row, rowIndex) => (
             <tr key={rowIndex} className="border-b">
               {columns.map((column, colIndex) => (
-                <td key={colIndex} className="py-4 px-4">
+                <td key={colIndex} className="py-4 px-2">
                   {column.render
-                    ? column.render(row[column.accessor])
+                    ? column.render(row[column.accessor], row)
                     : row[column.accessor]}
                 </td>
               ))}

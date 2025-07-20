@@ -1,18 +1,59 @@
-import { axs } from "@/lib/axios";
-import { ApiResponse, AuthUser } from "@/lib/types";
-import { User } from "@/types";
+import { authApi } from "@/lib/axios";
+import { AuthUser, Contribution, DashboardData, User } from "@/lib/types";
 
 export class UserService {
   static async updateUser(
     id: number,
     req: Omit<Partial<User>, "date_created" | "last_login" | "id">
-  ): Promise<ApiResponse<AuthUser>> {
+  ): Promise<AuthUser> {
     try {
-      const response = await axs.patch(`/users/${id}/`, req);
-      return response.data;
+      const response = await authApi.patch(`/users/${id}/`, req);
+      return response.data.data;
     } catch (error) {
       console.error("Error logging in:", error);
       throw error;
     }
+  }
+
+  static async getUser(id: number): Promise<User> {
+    const response = await authApi.patch(`/users/${id}/`);
+    return response.data;
+  }
+
+  static async dashboardData(): Promise<DashboardData> {
+    const response = await authApi.get("/dashboard/user-data/");
+    return response.data.data;
+  }
+
+  static async getContributions(): Promise<Contribution[]> {
+    const response = await authApi.get("/contributions/");
+    return response.data.data;
+  }
+
+  static async getSingleContribution(groupId: string): Promise<Contribution> {
+    const response = await authApi.get(`/contributions/${groupId}/`);
+    return response.data.data;
+  }
+
+  static async fundContribution(
+    contribution_id: number,
+    amount: number | string,
+    is_wallet: boolean
+  ) {
+    const data = {
+      contribution_id,
+      amount: typeof amount === "string" ? parseFloat(amount) : amount,
+      is_wallet,
+    };
+
+    const response = await authApi.post("/payments/fund-contribution/", data);
+    return response.data.data;
+  }
+
+  static async downloadReceipt(contribution_id: string) {
+    const response = await authApi.get(
+      `/contributions/receipt/${contribution_id}/`
+    );
+    return response.data.data;
   }
 }

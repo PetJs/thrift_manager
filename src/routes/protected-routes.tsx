@@ -1,15 +1,32 @@
 import { Navigate } from "react-router-dom";
 
-type Props = {
+type ProtectedRouteProps = {
   isAuthorized: boolean;
-  children: React.ReactNode;
+  requiredRole?: string;
+  userRole?: string;
+  children?: React.ReactNode;
 };
 
-const ProtectedRoute = ({ isAuthorized, children }: Props) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
+  isAuthorized, 
+  requiredRole, 
+  userRole, 
+  children 
+}) => {
+  console.log("🚀 Debug: User Role:", userRole); // log user role
+  console.log("🚀 Debug: Required Role:", requiredRole); // log required role
+
+  console.log("🚀 Debug: User Role:", userRole, " | Required Role:", requiredRole);
+
   if (!isAuthorized) {
-    return <Navigate to={`/signin`} replace />;
+    console.log("🔴 Not Authorized: Redirecting to /signIn");
+    return <Navigate to="/signIn" replace />;
   }
 
+  if (requiredRole && userRole !== requiredRole) {
+    console.log("🔴 Role Mismatch: Redirecting to /signIn");
+    return <Navigate to="/signIn" replace />;
+  }
   return <>{children}</>;
 };
 

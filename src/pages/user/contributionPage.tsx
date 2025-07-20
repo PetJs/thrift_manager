@@ -1,56 +1,111 @@
 import CustomTable from "@/components/ui/table";
+import { formatToNaira } from "@/lib/types";
+import { UserService } from "@/services/user-service";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
-type Status = "Paid" | "Pending" | "Upcoming";
-
-const paymentData = [
-  { month: "January", amount: "NGN10,000", status: "Paid", datePaid: "20th Jan, 2025", receiptLink: "#" },
-  { month: "February", amount: "NGN10,000", status: "Pending", datePaid: "20th Jan, 2025", receiptLink: "#" },
-  { month: "March", amount: "NGN10,000", status: "Paid", datePaid: "20th Jan, 2025", receiptLink: "#" },
-  { month: "April", amount: "NGN10,000", status: "Upcoming", datePaid: "20th Jan, 2025", receiptLink: "#" },
-];
+type Status = "active" | "inactive" | "upcoming";
 
 const columns = [
-  { header: "Month", accessor: "month" },
-  { header: "Amount", accessor: "amount" },
   {
-    header: "Status",
-    accessor: "status",
-    render: (status: string) => {
-      const colors: Record<Status, string> = {
-        Paid: "bg-green-100 text-green-700",
-        Pending: "bg-yellow-100 text-yellow-700",
-        Upcoming: "bg-blue-100 text-blue-700",
-      };
-      return <div className={` rounded-lg text-center  text-sm ${colors[status as Status]}`}>{status}</div>;
+    header: "Month",
+    accessor: "start_date",
+    render: (start_date: Date) => {
+      return (
+        <p>{new Date(start_date).toLocaleString("en", { month: "long" })}</p>
+      );
     },
   },
-  { header: "Date Paid", accessor: "datePaid" },
   {
-    header: "Receipt",
-    accessor: "receiptLink",
-    render: (link: string) => (
-      <a href={link} className="text-blue-600 underline">
-        Download Receipt
-      </a>
-    ),
+    header: "Amount",
+    accessor: "amount",
+    Cell: ({ value }: { value: string }) => {
+      const numericValue = Number(value.replace(/[^0-9.]/g, "")); // Extract number
+      return formatToNaira(numericValue);
+    },
+  },
+  {
+    header: "Status",
+    accessor: "payout_status",
+    render: (status: string) => {
+      const colors: Record<Status, string> = {
+        active: "bg-green-100 text-green-700",
+        inactive: "bg-yellow-100 text-yellow-700",
+        upcoming: "bg-blue-100 text-blue-700",
+      };
+      return (
+        <div
+          className={` rounded-lg text-center  text-sm ${
+            colors[status as Status]
+          }`}
+        >
+          {status}
+        </div>
+      );
+    },
+  },
+  { header: "Date Paid", accessor: "end_date" },
+  {
+    header: "id",
+    accessor: "id",
+    render: (id: string) => {
+      return (
+        <a
+          href="#"
+          className="text-blue-600 underline"
+          onClick={async () => {
+            try {
+              await UserService.downloadReceipt(id);
+              toast.success("receipt sent to your email");
+            } catch (err) {
+              console.error(err);
+              toast.error("unable to download receipt");
+            }
+          }}
+        >
+          Download Receipt
+        </a>
+      );
+    },
   },
 ];
 
 const ContributionPage = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["contributions"],
+    queryFn: UserService.getContributions,
+  });
 
+  const currentMonth = new Date();
+  const currentMonthStatus =
+    (data && data.find((item) => item.start_date === currentMonth)?.status) ||
+    "Unknown";
+
+  if (isLoading) {
     return (
-          <>
-           <div className="mb-6">
-              <h2 className="text-[22px] font-semibold mb-4">Contributions</h2>
-              <p className="text-[18px]">Status for this month: Pending</p>
-            </div>
-            <div className="flex items-center text-center gap-3" >
-                <h2 className="text-[22px]  mb-4">Contribution History</h2>
-                <hr className="w-[859px] border-gray-300 border-1" />
-            </div>
-            <CustomTable columns={columns} data={paymentData} />  
-          </>
-    )
+      <div className="flex items-center flex-col justify-center h-[80vh]">
+        <Loader2 className="w-16 h-16 animate-spin" />
+        <h1 className="text-lg">Loading...</h1>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="mb-6">
+        <h2 className="text-[22px] font-semibold mb-4">Contributions</h2>
+        <p className="text-[18px]">
+          Status for this month: {currentMonthStatus}
+        </p>
+      </div>
+      <div className="flex items-center text-center gap-3">
+        <h2 className="text-[22px]  mb-4">Contribution History</h2>
+        <hr className="w-[859px] border-gray-300 border-1" />
+      </div>
+      {data && <CustomTable columns={columns} data={data} />}
+    </>
+  );
 };
 
 export default ContributionPage;

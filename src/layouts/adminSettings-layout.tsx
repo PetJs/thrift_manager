@@ -1,14 +1,15 @@
 import SettingNav from "@/components/ui/settings-nav";
 import { Outlet } from "react-router-dom";
 
-export default function SettingLayout() {
+export default function AdminSettingsLayout() {
     
 
     const settingItems = [
-        { label: "My Profile", path: "/users/settings/profile" },
-        { label: "Payment and Bank Details", path: "/users/settings/payment-details" },
-        { label: "Notification Prefrences", path: "/users/settings/notification" },
-        { label: "Security Settings", path: "/users/settings/security" },
+        { label: "My Profile", path: "/admin/settings/profile" },
+        { label: "Payment and Bank Details", path: "/admin/settings/payment-details" },
+        { label: "Notification Prefrences", path: "/admin/settings/notification" },
+        { label: "Security Settings", path: "/admin/settings/security" },
+        { label: "General Settings", path: "/admin/settings/general" },
     ]
       
     return (

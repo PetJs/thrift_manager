@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Route, Routes as ReactRoutes, Navigate } from "react-router-dom";
+import { Route, Routes as ReactRoutes, Navigate, Outlet } from "react-router-dom";
 import ProtectedRoute from "../protected-routes";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import useUserStore from "@/store/user-store";
@@ -10,6 +10,7 @@ type RouteConfig = {
   element?: React.ComponentType<any>;
   title?: string;
   routes?: RouteConfig[]; // Nested routes
+  requiredRole?: string;
 };
 
 type LayoutConfig = {
@@ -20,17 +21,26 @@ type LayoutConfig = {
 const renderRoutes = (
   routes: RouteConfig[],
   parentLayout?: React.ComponentType<any>,
-  isAuthorized = true
+  isAuthorized = true,
+  userRole = "admin",
+  parentRequiredRole?: string  // New parameter to carry down parent's requiredRole
 ) => {
   return routes.map(
-    ({ element: Element, path, routes: nestedRoutes, name }, index) => {
+    ({ element: Element, path, routes: nestedRoutes, name, requiredRole }, index) => {
       if (!Element || !path) return null;
 
-      // If there are nested routes, render them recursively
+      // If a nested route doesn't have its own requiredRole, inherit from the parent
+      const effectiveRequiredRole = requiredRole || parentRequiredRole;
+
+      // Check if route needs protection
+      const needsProtection = parentLayout === DashboardLayout;
+      const hasRequiredRole = !effectiveRequiredRole || effectiveRequiredRole === userRole;
+      const isAccessible = isAuthorized && (!needsProtection || hasRequiredRole);
+
       if (nestedRoutes && nestedRoutes.length > 0) {
         return (
           <Route key={`${path}-${index}`} path={path} element={<Element />}>
-            {renderRoutes(nestedRoutes, undefined, isAuthorized)}
+            {renderRoutes(nestedRoutes, parentLayout, isAuthorized, userRole, effectiveRequiredRole)}
           </Route>
         );
       }
@@ -40,8 +50,12 @@ const renderRoutes = (
           key={name || `route-${index}`}
           path={path}
           element={
-            parentLayout === DashboardLayout ? (
-              <ProtectedRoute isAuthorized={isAuthorized}>
+            needsProtection ? (
+              <ProtectedRoute
+                isAuthorized={isAccessible}
+                requiredRole={effectiveRequiredRole}
+                userRole={userRole}
+              >
                 <Element />
               </ProtectedRoute>
             ) : (
@@ -54,21 +68,55 @@ const renderRoutes = (
   );
 };
 
+
 export const generateRoutes = (mainRoutes: LayoutConfig[]) => {
   const Routes = () => {
-    const { authorized: isAuthorized } = useUserStore();
+    const { authorized: isAuthorized, currentRole } = useUserStore();
+    console.log("Authorized:", isAuthorized);
+    console.log("Current Role:", currentRole);
 
     return (
       <ReactRoutes>
         {mainRoutes.map(({ layout: Layout, routes }, index) => (
           <Route key={`layout-${index}`} element={<Layout />}>
-            {renderRoutes(routes, Layout, isAuthorized)}
+            {renderRoutes(routes, Layout, isAuthorized, currentRole ?? "", undefined)}
           </Route>
         ))}
+
         <Route
           path="/"
-          element={<Navigate to={isAuthorized ? "/home" : "/signin"} />}
+          element={
+            !isAuthorized || !currentRole ? (
+              <Navigate to="/signIn" replace />
+            ) : currentRole === "admin" ? (
+              <Navigate to="/admin" replace />
+            ) : (
+              <Navigate to="/users" replace />
+            )
+          }
         />
+
+        {/* Restrict admin routes */}
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedRoute isAuthorized={isAuthorized} requiredRole="admin" userRole={currentRole ?? ""}>
+              <Outlet />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Restrict user routes */}
+        <Route
+          path="/users/*"
+          element={
+            <ProtectedRoute isAuthorized={isAuthorized} requiredRole="user" userRole={currentRole ?? ""}>
+              <Outlet />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/signIn" replace />} />
       </ReactRoutes>
     );
   };
