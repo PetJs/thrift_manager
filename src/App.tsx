@@ -1,13 +1,14 @@
-import './App.css'
+import "./App.css";
+import { Toaster } from "./components/ui/sonner";
+import { Routes } from "./routes";
 
 function App() {
-
-
   return (
     <>
-      <h1 className='text-blue-500'>Thrift Manager</h1>
+      <Toaster />
+      <Routes />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
